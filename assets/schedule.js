@@ -103,8 +103,17 @@
     document.querySelectorAll("[data-ttc-dates]").forEach(function (el) {
       var evs = byCode[el.getAttribute("data-ttc-dates")] || [];
       var max = +(el.getAttribute("data-ttc-max") || 6);
-      if (!evs.length) return;
+      if (!evs.length) {
+        el.innerHTML = '<div class="px-5 sm:px-8 py-4"><p class="text-sm text-[#47545D]">New dates are being scheduled. <a href="#ask" class="font-semibold text-[#0085B7]">Ask us</a> and we will let you know as soon as they open.</p></div>';
+        return;
+      }
       el.innerHTML = evs.slice(0, max).map(function (ev) { return rowHtml(ev, false); }).join("");
+    });
+
+    // Course meta line: <p data-ttc-meta="CERT7"> -> "2 full days · 9:00am–4:00pm UK · live online"
+    document.querySelectorAll("[data-ttc-meta]").forEach(function (el) {
+      var evs = byCode[el.getAttribute("data-ttc-meta")] || [];
+      if (evs.length) el.textContent = evs[0].lengthLabel + " · " + evs[0].timeLabel + " · live online";
     });
 
     // Next-N across all courses: <div data-ttc-next="4">
