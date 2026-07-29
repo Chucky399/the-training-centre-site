@@ -24,6 +24,9 @@ slim = []
 for ev in items:
     offer = (ev.get("AdvertisedOffers") or [{}])[0].get("OfferAmount", {})
     view = ev.get("ViewUri", "")
+    # Book straight into Arlo registration (the event page's own Book Now target);
+    # fall back to the per-date event page if a register link is ever missing.
+    register = (ev.get("RegistrationInfo") or {}).get("RegisterUri")
     slim.append({
         "id": ev["EventID"],
         "code": ev.get("TemplateCode", ""),
@@ -31,7 +34,7 @@ for ev in items:
         "start": ev.get("StartDateTime", ""),
         "end": ev.get("EndDateTime", ""),
         "price": offer.get("AmountTaxInclusive"),
-        "book": view.replace("/uk/courses/", "/w/uk/courses/") + "/" + str(ev["EventID"]),
+        "book": register or (view.replace("/uk/courses/", "/w/uk/courses/") + "/" + str(ev["EventID"])),
         "full": ev.get("IsFull", False),
     })
 slim.sort(key=lambda e: e["start"])

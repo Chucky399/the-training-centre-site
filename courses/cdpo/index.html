@@ -16,6 +16,11 @@
   .tnum { font-variant-numeric: tabular-nums; }
   .jumpnav::-webkit-scrollbar { display: none; }
   .jumpnav { scrollbar-width: none; }
+  .btn-solid { display:inline-block; background:#13B4EA; color:#fff; font-weight:600; border-radius:4px; box-shadow:4px 4px 0 0 #1E2B34; transition:transform .12s ease, box-shadow .12s ease, background-color .12s ease; }
+  .btn-solid:hover { background:#0085B7; transform:translate(2px,2px); box-shadow:2px 2px 0 0 #1E2B34; }
+  .btn-light { display:inline-block; background:#fff; color:#1E2B34; font-weight:600; border:2px solid #1E2B34; border-radius:4px; box-shadow:4px 4px 0 0 #13B4EA; transition:transform .12s ease, box-shadow .12s ease; }
+  .btn-light:hover { transform:translate(2px,2px); box-shadow:2px 2px 0 0 #13B4EA; }
+  .card-pop { box-shadow:8px 8px 0 0 rgba(19,180,234,.28); }
 </style>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PHR6JF2');</script>
 </head>
@@ -23,6 +28,12 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PHR6JF2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <header class="bg-white border-b border-[#323F48]/10 sticky top-0 z-50">
+  <div class="bg-[#1E2B34] text-[#C8D2D9]">
+    <div class="max-w-6xl mx-auto px-5 py-1.5 flex items-center justify-between gap-4 text-xs sm:text-sm">
+      <p class="whitespace-nowrap">Got a question? Call <a href="tel:+442038589207" class="font-semibold text-white hover:text-[#13B4EA]">020 3858 9207</a></p>
+      <a href="mailto:info@the-training-centre.com" class="hidden sm:block hover:text-white">info@the-training-centre.com</a>
+    </div>
+  </div>
   <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
     <a href="/" aria-label="The Training Centre home"><img src="/assets/ttc-logo.png" alt="The Training Centre. Learn. Evolve. Lead." class="h-9 sm:h-11 w-auto"></a>
     <nav class="hidden lg:flex items-center gap-7 text-sm text-[#47545D]" aria-label="Site">
@@ -34,9 +45,9 @@
     </nav>
     <div class="flex items-center gap-2 sm:gap-4">
       <a href="tel:+442038589207" class="hidden xl:flex items-center gap-2 font-semibold text-[#1E2B34] whitespace-nowrap"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
-      <a href="#dates" class="hidden sm:inline-block bg-[#13B4EA] hover:bg-[#0085B7] text-white font-semibold text-sm px-5 py-2.5 rounded-[6px] whitespace-nowrap">See dates &amp; book</a>
-      <a href="tel:+442038589207" class="lg:hidden flex items-center justify-center w-11 h-11 rounded-[6px] border border-[#13B4EA] text-[#0085B7]" aria-label="Call us on 020 3858 9207"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></a>
-      <button id="menu-toggle" type="button" class="lg:hidden flex items-center justify-center w-11 h-11 rounded-[6px] border border-[#323F48]/20 text-[#1E2B34]" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+      <a href="#dates" class="btn-solid hidden sm:inline-block text-sm px-5 py-2.5 whitespace-nowrap">See dates &amp; book</a>
+      <a href="tel:+442038589207" class="lg:hidden flex items-center justify-center w-11 h-11 rounded-[4px] border border-[#13B4EA] text-[#0085B7]" aria-label="Call us on 020 3858 9207"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></a>
+      <button id="menu-toggle" type="button" class="lg:hidden flex items-center justify-center w-11 h-11 rounded-[4px] border border-[#323F48]/20 text-[#1E2B34]" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
         <svg id="menu-icon-open" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         <svg id="menu-icon-close" class="w-6 h-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
@@ -62,7 +73,7 @@
       <a href="/contact/" class="block px-5 py-3.5 font-semibold text-[#1E2B34]">Contact</a>
     </nav>
     <div class="px-5 py-4 border-t border-[#323F48]/10 flex flex-col gap-3">
-      <a href="#dates" class="mobile-menu-cta block text-center bg-[#13B4EA] text-white font-semibold py-3.5 rounded-[6px]">See dates &amp; book</a>
+      <a href="#dates" class="mobile-menu-cta btn-solid block text-center py-3.5">See dates &amp; book</a>
       <a href="tel:+442038589207" class="flex items-center justify-center gap-2 font-semibold text-[#1E2B34] py-2"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
     </div>
   </div>
@@ -84,10 +95,10 @@
       <div><dt class="text-xs font-semibold uppercase tracking-wide text-[#47545D]">Fee</dt><dd class="font-display font-bold text-[#1E2B34] mt-1" data-ttc-price="CERT13"></dd></div>
     </dl>
     <div class="flex flex-wrap items-center gap-4 mt-8">
-      <a href="#dates" class="bg-[#13B4EA] hover:bg-[#0085B7] text-white font-semibold px-7 py-3.5 rounded-[6px]">See dates &amp; book</a>
+      <a href="#dates" class="btn-solid px-7 py-3.5">See dates &amp; book</a>
     </div>
   </div>
-  <aside class="bg-[#1E2B34] rounded-[10px] p-6 sm:p-7">
+  <aside class="bg-[#1E2B34] rounded-[8px] p-6 sm:p-7">
     <h2 class="font-display font-bold text-white text-lg">Included in your fee</h2>
     <ul class="mt-4 space-y-3 text-[#C8D2D9]">
       <li class="flex items-start gap-3"><span class="text-[#13B4EA] mt-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg></span><span>3 full days, taught live online</span></li>
@@ -111,17 +122,17 @@
 
 <section id="dates" class="scroll-mt-28 max-w-6xl mx-auto px-5 py-16">
   <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-    <h2 class="font-display font-bold text-2xl sm:text-3xl text-[#1E2B34]">Upcoming dates</h2>
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]">Upcoming dates</h2>
     <p class="text-[#47545D]" data-ttc-meta="CERT13">Live online</p>
   </div>
-  <div class="bg-white border border-[#323F48]/10 rounded-[10px] mt-8 overflow-hidden divide-y divide-[#323F48]/10 tnum" data-ttc-dates="CERT13" data-ttc-max="6">
+  <div class="bg-white border border-[#323F48]/10 rounded-[8px] mt-8 overflow-hidden divide-y divide-[#323F48]/10 tnum" data-ttc-dates="CERT13" data-ttc-max="6">
     <div class="px-6 sm:px-8 py-4"><p class="text-sm text-[#47545D]">Loading dates...</p></div>
   </div>
   <p class="text-sm text-[#47545D] mt-4">Plans change? You can transfer to another date yourself, free of charge, up to the day before the course, straight from your booking email.</p>
 </section>
 
 <section id="who" class="scroll-mt-28 max-w-6xl mx-auto px-5 py-16">
-  <h2 class="font-display font-bold text-2xl sm:text-3xl text-[#1E2B34] max-w-[30ch]">Who this course is for</h2>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34] max-w-[30ch]">Who this course is for</h2>
   <div class="grid md:grid-cols-3 gap-8 mt-9">
     <div class="border-t-2 border-[#13B4EA] pt-5">
       <h3 class="font-display font-bold text-lg text-[#1E2B34]">New and aspiring DPOs</h3>
@@ -140,19 +151,19 @@
 
 <section id="testimonials" class="scroll-mt-28 bg-[#323F48]">
   <div class="max-w-6xl mx-auto px-5 py-16">
-    <h2 class="font-display font-bold text-2xl sm:text-3xl text-white">What delegates say</h2>
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white">What delegates say</h2>
     <div class="grid md:grid-cols-3 gap-6 mt-9">
-      <figure class="bg-white rounded-[10px] p-7">
+      <figure class="bg-white rounded-[8px] p-7">
         <div class="flex gap-1 text-[#13B4EA]" aria-hidden="true"><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg></div>
         <blockquote class="mt-4 text-[#2C2C2C] leading-relaxed">&ldquo;I would recommend the course to individuals looking for a general overview of the GDPR&rdquo;</blockquote>
         <figcaption class="mt-4 text-sm font-semibold text-[#47545D]">Lauren, course delegate</figcaption>
       </figure>
-      <figure class="bg-white rounded-[10px] p-7">
+      <figure class="bg-white rounded-[8px] p-7">
         <div class="flex gap-1 text-[#13B4EA]" aria-hidden="true"><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg></div>
         <blockquote class="mt-4 text-[#2C2C2C] leading-relaxed">&ldquo;Professional, knowledgeable trainer and courses at a reasonable price in comparison. Good choice of locations too.&rdquo;</blockquote>
         <figcaption class="mt-4 text-sm font-semibold text-[#47545D]">Evonne, course delegate</figcaption>
       </figure>
-      <figure class="bg-white rounded-[10px] p-7">
+      <figure class="bg-white rounded-[8px] p-7">
         <div class="flex gap-1 text-[#13B4EA]" aria-hidden="true"><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg></div>
         <blockquote class="mt-4 text-[#2C2C2C] leading-relaxed">&ldquo;The delivery of the training was excellent&rdquo;</blockquote>
         <figcaption class="mt-4 text-sm font-semibold text-[#47545D]">Anouska, course delegate</figcaption>
@@ -163,37 +174,37 @@
 
 <section id="faq" class="scroll-mt-28 bg-white border-y border-[#323F48]/10">
   <div class="max-w-3xl mx-auto px-5 py-16">
-    <h2 class="font-display font-bold text-2xl sm:text-3xl text-[#1E2B34]">Questions delegates ask</h2>
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]">Questions delegates ask</h2>
     <div class="space-y-3 mt-9">
-      <details class="group border border-[#323F48]/10 rounded-[10px] bg-white">
+      <details class="group border border-[#323F48]/10 rounded-[8px] bg-white">
         <summary class="flex items-center justify-between cursor-pointer list-none px-6 py-4 font-semibold text-[#1E2B34]">
           How is CDPO different from CIPP/E?
           <span class="text-[#13B4EA] group-open:rotate-45 text-2xl font-light leading-none ml-4">+</span>
         </summary>
         <p class="px-6 pb-5 text-[#47545D] leading-relaxed">CIPP/E certifies your knowledge of European privacy law. CDPO trains you for the DPO role itself: running the function, audits, breach response and accountability. Many delegates do both. <a href="/courses/cipp-e/" class="font-semibold text-[#0085B7]">See the CIPP/E course</a>.</p>
       </details>
-      <details class="group border border-[#323F48]/10 rounded-[10px] bg-white">
+      <details class="group border border-[#323F48]/10 rounded-[8px] bg-white">
         <summary class="flex items-center justify-between cursor-pointer list-none px-6 py-4 font-semibold text-[#1E2B34]">
           Is the course live?
           <span class="text-[#13B4EA] group-open:rotate-45 text-2xl font-light leading-none ml-4">+</span>
         </summary>
         <p class="px-6 pb-5 text-[#47545D] leading-relaxed">Yes. Three full consecutive days taught live online. Not recorded e-learning.</p>
       </details>
-      <details class="group border border-[#323F48]/10 rounded-[10px] bg-white">
+      <details class="group border border-[#323F48]/10 rounded-[8px] bg-white">
         <summary class="flex items-center justify-between cursor-pointer list-none px-6 py-4 font-semibold text-[#1E2B34]">
           What happens if I fail the exam?
           <span class="text-[#13B4EA] group-open:rotate-45 text-2xl font-light leading-none ml-4">+</span>
         </summary>
         <p class="px-6 pb-5 text-[#47545D] leading-relaxed">We train you again free. If you fail your exam on the first attempt, you retake the course at no cost.</p>
       </details>
-      <details class="group border border-[#323F48]/10 rounded-[10px] bg-white">
+      <details class="group border border-[#323F48]/10 rounded-[8px] bg-white">
         <summary class="flex items-center justify-between cursor-pointer list-none px-6 py-4 font-semibold text-[#1E2B34]">
           Can I spread the cost?
           <span class="text-[#13B4EA] group-open:rotate-45 text-2xl font-light leading-none ml-4">+</span>
         </summary>
         <p class="px-6 pb-5 text-[#47545D] leading-relaxed">Yes. 0% interest payment plans are available on all courses.</p>
       </details>
-      <details class="group border border-[#323F48]/10 rounded-[10px] bg-white">
+      <details class="group border border-[#323F48]/10 rounded-[8px] bg-white">
         <summary class="flex items-center justify-between cursor-pointer list-none px-6 py-4 font-semibold text-[#1E2B34]">
           Do you train whole teams?
           <span class="text-[#13B4EA] group-open:rotate-45 text-2xl font-light leading-none ml-4">+</span>
@@ -207,23 +218,23 @@
 <!-- ENQUIRE -->
 <section id="enquire" class="scroll-mt-28 max-w-6xl mx-auto px-5 py-16 grid md:grid-cols-[0.9fr_1.1fr] gap-10">
   <div>
-    <h2 class="font-display font-bold text-2xl sm:text-3xl text-[#1E2B34]" style="text-wrap:balance">Ask us anything about this course</h2>
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]" style="text-wrap:balance">Ask us anything about this course</h2>
     <p class="text-[#47545D] mt-4 leading-relaxed">Booking for a team, need sign-off from above, or just want to check it is the right course? Send the form and a course adviser replies the same working day. If we are not the right fit, we will say so.</p>
     <a href="tel:+442038589207" class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1E2B34]"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
     <p class="text-sm text-[#47545D] mt-2">Our office team answers during UK business hours.</p>
   </div>
-  <form id="enquiry-form" action="https://lp-form-handler.claireljarrett.workers.dev/submit" method="POST" class="bg-white border border-[#323F48]/10 rounded-[10px] p-6 sm:p-8 space-y-4">
+  <form id="enquiry-form" action="https://lp-form-handler.claireljarrett.workers.dev/submit" method="POST" class="bg-white border border-[#323F48]/10 rounded-[8px] p-6 sm:p-8 space-y-4">
     <input type="hidden" name="project" value="the-training-centre">
     <input type="hidden" name="Course" value="CDPO">
     <div><label for="name" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Your name</label>
-      <input required type="text" id="name" name="name" class="w-full border border-[#323F48]/20 rounded-[6px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="name"></div>
+      <input required type="text" id="name" name="name" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="name"></div>
     <div><label for="email" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Work email</label>
-      <input required type="email" id="email" name="email" class="w-full border border-[#323F48]/20 rounded-[6px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="email"></div>
+      <input required type="email" id="email" name="email" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="email"></div>
     <div><label for="phone" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Phone number</label>
-      <input required type="tel" id="phone" name="phone" class="w-full border border-[#323F48]/20 rounded-[6px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="tel"></div>
+      <input required type="tel" id="phone" name="phone" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="tel"></div>
     <div><label for="message" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Your question <span class="font-normal text-[#47545D]">(optional)</span></label>
-      <textarea id="message" name="message" rows="3" class="w-full border border-[#323F48]/20 rounded-[6px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" placeholder="Dates, team bookings, payment plans, whether this is the right course..."></textarea></div>
-    <button type="submit" class="w-full bg-[#13B4EA] hover:bg-[#0085B7] text-white font-semibold py-3.5 rounded-[6px]">Send my question</button>
+      <textarea id="message" name="message" rows="3" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" placeholder="Dates, team bookings, payment plans, whether this is the right course..."></textarea></div>
+    <button type="submit" class="btn-solid w-full py-3.5">Send my question</button>
     <p id="form-note" class="text-xs text-[#47545D]">We reply the same working day. Your details go to our course advisers and nowhere else.</p>
   </form>
 </section>
@@ -242,8 +253,8 @@
 </footer>
 
 <div class="fixed bottom-0 inset-x-0 z-50 md:hidden bg-white border-t border-[#323F48]/15 px-4 py-3 flex gap-3">
-  <a href="tel:+442038589207" class="flex-1 text-center border border-[#13B4EA] text-[#0085B7] font-semibold py-3 rounded-[6px]">Call us</a>
-  <a href="#dates" class="flex-1 text-center bg-[#13B4EA] text-white font-semibold py-3 rounded-[6px]">See dates &amp; book</a>
+  <a href="tel:+442038589207" class="btn-light flex-1 text-center py-3">Call us</a>
+  <a href="#dates" class="btn-solid flex-1 text-center py-3">See dates &amp; book</a>
 </div>
 
 <script src="/assets/schedule-data.js"></script>

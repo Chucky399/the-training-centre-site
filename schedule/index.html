@@ -16,6 +16,11 @@
   .tnum { font-variant-numeric: tabular-nums; }
   .jumpnav::-webkit-scrollbar { display: none; }
   .jumpnav { scrollbar-width: none; }
+  .btn-solid { display:inline-block; background:#13B4EA; color:#fff; font-weight:600; border-radius:4px; box-shadow:4px 4px 0 0 #1E2B34; transition:transform .12s ease, box-shadow .12s ease, background-color .12s ease; }
+  .btn-solid:hover { background:#0085B7; transform:translate(2px,2px); box-shadow:2px 2px 0 0 #1E2B34; }
+  .btn-light { display:inline-block; background:#fff; color:#1E2B34; font-weight:600; border:2px solid #1E2B34; border-radius:4px; box-shadow:4px 4px 0 0 #13B4EA; transition:transform .12s ease, box-shadow .12s ease; }
+  .btn-light:hover { transform:translate(2px,2px); box-shadow:2px 2px 0 0 #13B4EA; }
+  .card-pop { box-shadow:8px 8px 0 0 rgba(19,180,234,.28); }
 </style>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PHR6JF2');</script>
 </head>
@@ -23,6 +28,12 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PHR6JF2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <header class="bg-white border-b border-[#323F48]/10 sticky top-0 z-50">
+  <div class="bg-[#1E2B34] text-[#C8D2D9]">
+    <div class="max-w-6xl mx-auto px-5 py-1.5 flex items-center justify-between gap-4 text-xs sm:text-sm">
+      <p class="whitespace-nowrap">Got a question? Call <a href="tel:+442038589207" class="font-semibold text-white hover:text-[#13B4EA]">020 3858 9207</a></p>
+      <a href="mailto:info@the-training-centre.com" class="hidden sm:block hover:text-white">info@the-training-centre.com</a>
+    </div>
+  </div>
   <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
     <a href="/" aria-label="The Training Centre home"><img src="/assets/ttc-logo.png" alt="The Training Centre. Learn. Evolve. Lead." class="h-9 sm:h-11 w-auto"></a>
     <nav class="hidden lg:flex items-center gap-7 text-sm text-[#47545D]" aria-label="Site">
@@ -34,9 +45,9 @@
     </nav>
     <div class="flex items-center gap-2 sm:gap-4">
       <a href="tel:+442038589207" class="hidden xl:flex items-center gap-2 font-semibold text-[#1E2B34] whitespace-nowrap"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
-      <a href="#ask" class="hidden sm:inline-block bg-[#13B4EA] hover:bg-[#0085B7] text-white font-semibold text-sm px-5 py-2.5 rounded-[6px] whitespace-nowrap">Ask a question</a>
-      <a href="tel:+442038589207" class="lg:hidden flex items-center justify-center w-11 h-11 rounded-[6px] border border-[#13B4EA] text-[#0085B7]" aria-label="Call us on 020 3858 9207"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></a>
-      <button id="menu-toggle" type="button" class="lg:hidden flex items-center justify-center w-11 h-11 rounded-[6px] border border-[#323F48]/20 text-[#1E2B34]" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+      <a href="#ask" class="btn-solid hidden sm:inline-block text-sm px-5 py-2.5 whitespace-nowrap">Ask a question</a>
+      <a href="tel:+442038589207" class="lg:hidden flex items-center justify-center w-11 h-11 rounded-[4px] border border-[#13B4EA] text-[#0085B7]" aria-label="Call us on 020 3858 9207"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></a>
+      <button id="menu-toggle" type="button" class="lg:hidden flex items-center justify-center w-11 h-11 rounded-[4px] border border-[#323F48]/20 text-[#1E2B34]" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
         <svg id="menu-icon-open" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         <svg id="menu-icon-close" class="w-6 h-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
@@ -63,7 +74,7 @@
       <a href="/contact/" class="block px-5 py-3.5 font-semibold text-[#1E2B34]">Contact</a>
     </nav>
     <div class="px-5 py-4 border-t border-[#323F48]/10 flex flex-col gap-3">
-      <a href="#ask" class="mobile-menu-cta block text-center bg-[#13B4EA] text-white font-semibold py-3.5 rounded-[6px]">Ask a question</a>
+      <a href="#ask" class="mobile-menu-cta btn-solid block text-center py-3.5">Ask a question</a>
       <a href="tel:+442038589207" class="flex items-center justify-center gap-2 font-semibold text-[#1E2B34] py-2"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
     </div>
   </div>
@@ -74,7 +85,7 @@
     <p class="text-[#13B4EA] font-display font-bold uppercase tracking-[0.14em] text-xs">Live course schedule</p>
     <h1 class="font-display font-extrabold text-white text-3xl sm:text-4xl md:text-[2.7rem] leading-tight mt-4 max-w-[24ch]" style="text-wrap:balance">Pick your course. Pick your dates. Book your place.</h1>
     <p class="text-[#C8D2D9] text-lg leading-relaxed mt-5 max-w-[58ch]">Every course below runs live online, taught in real time by trainers with 25+ years in industry. The dates you see are the dates we run, straight from our booking system.</p>
-    <div class="grid sm:grid-cols-3 gap-px bg-white/10 border border-white/10 rounded-[10px] overflow-hidden mt-9 max-w-3xl">
+    <div class="grid sm:grid-cols-3 gap-px bg-white/10 border border-white/10 rounded-[8px] overflow-hidden mt-9 max-w-3xl">
       <div class="bg-[#1E2B34] p-5"><p class="font-display font-bold text-white"><span class="text-[#13B4EA] tnum mr-2">1</span>Find your course</p><p class="text-sm text-[#8FA0AB] mt-1">Grouped by subject below.</p></div>
       <div class="bg-[#1E2B34] p-5"><p class="font-display font-bold text-white"><span class="text-[#13B4EA] tnum mr-2">2</span>Check the dates</p><p class="text-sm text-[#8FA0AB] mt-1">Days, times and price on every row.</p></div>
       <div class="bg-[#1E2B34] p-5"><p class="font-display font-bold text-white"><span class="text-[#13B4EA] tnum mr-2">3</span>Book online</p><p class="text-sm text-[#8FA0AB] mt-1">Secure your place in minutes.</p></div>
@@ -93,10 +104,10 @@
 
 <!-- IAPP -->
 <section id="iapp" class="scroll-mt-28 max-w-6xl mx-auto px-5 pt-14 pb-4">
-  <h2 class="font-display font-bold text-2xl sm:text-3xl text-[#1E2B34]">IAPP certification training</h2>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]">IAPP certification training</h2>
   <p class="text-[#47545D] mt-3 max-w-[62ch] leading-relaxed">Official IAPP courses with the exam and IAPP membership included in the price.</p>
 
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">CIPP/E &middot; Certified Information Privacy Professional Europe</h3>
@@ -109,7 +120,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">The recognised benchmark for European data protection law. Runs every month. <a href="/courses/cipp-e/" class="font-semibold text-[#0085B7]">Full course details, outline &amp; FAQs &rarr;</a></p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">CIPM &middot; Certified Information Privacy Manager</h3>
@@ -122,7 +133,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">The management credential that pairs with CIPP/E.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">DPO Ready &middot; European Data Protection &amp; Privacy Programme Management</h3>
@@ -135,7 +146,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">CIPP/E and CIPM combined in one week.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">AIGP &middot; AI Governance Professional</h3>
@@ -148,7 +159,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">The IAPP&rsquo;s AI governance credential, taught on official materials. <a href="/courses/aigp/" class="font-semibold text-[#0085B7]">Full course details &rarr;</a></p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">CIPT &middot; Certified Information Privacy Technologist</h3>
@@ -165,10 +176,10 @@
 
 <!-- DATA PROTECTION -->
 <section id="data-protection" class="scroll-mt-28 max-w-6xl mx-auto px-5 pt-10 pb-4">
-  <h2 class="font-display font-bold text-2xl sm:text-3xl text-[#1E2B34]">Data protection &amp; GDPR training</h2>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]">Data protection &amp; GDPR training</h2>
   <p class="text-[#47545D] mt-3 max-w-[62ch] leading-relaxed">Our own certified courses, built and taught by practitioners who do the DPO job.</p>
 
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">CDPO &middot; Certified Data Protection Officer</h3>
@@ -181,7 +192,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">Three days that cover the whole DPO role, taught by working DPOs. <a href="/courses/cdpo/" class="font-semibold text-[#0085B7]">Full course details &rarr;</a></p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">CIPA &middot; Certified Information Privacy Auditor</h3>
@@ -194,7 +205,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">Audit privacy programmes with confidence.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified GDPR Foundation</h3>
@@ -207,7 +218,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">One day to get properly grounded in the GDPR.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">GDPR Awareness Training</h3>
@@ -224,10 +235,10 @@
 
 <!-- AI -->
 <section id="ai" class="scroll-mt-28 max-w-6xl mx-auto px-5 pt-10 pb-4">
-  <h2 class="font-display font-bold text-2xl sm:text-3xl text-[#1E2B34]">AI safety &amp; governance training</h2>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]">AI safety &amp; governance training</h2>
   <p class="text-[#47545D] mt-3 max-w-[62ch] leading-relaxed">Credentials for the people making AI safe, governed and useful at work.</p>
 
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">TAISE &middot; Trusted AI Safety Expert</h3>
@@ -240,7 +251,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">The first credential for trustworthy AI. <a href="/courses/taise/" class="font-semibold text-[#0085B7]">Full course details &rarr;</a></p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">AI Strategy &amp; Governance Foundation and Practitioner</h3>
@@ -253,7 +264,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">Strategy and governance in one combined programme.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">AI Agents Foundation &amp; Practitioner</h3>
@@ -266,7 +277,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">Design, deploy and govern AI agents.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">AI Productivity Foundation &amp; Practitioner</h3>
@@ -279,7 +290,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">Put AI to work across your team&rsquo;s day-to-day.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Artificial Intelligence for Project Managers</h3>
@@ -296,10 +307,10 @@
 
 <!-- ISO -->
 <section id="iso" class="scroll-mt-28 max-w-6xl mx-auto px-5 pt-10 pb-4">
-  <h2 class="font-display font-bold text-2xl sm:text-3xl text-[#1E2B34]">ISO standards training</h2>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]">ISO standards training</h2>
   <p class="text-[#47545D] mt-3 max-w-[62ch] leading-relaxed">Certified lead implementer, lead auditor and risk courses, designed and delivered in-house. You deal with the trainer&rsquo;s own team from booking to certificate. <a href="/courses/iso-standards/" class="font-semibold text-[#0085B7]">Which ISO course do I need? &rarr;</a></p>
 
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified ISO 27001 Lead Implementer</h3>
@@ -311,7 +322,7 @@
       <div class="px-6 sm:px-8 py-4"><p class="text-sm text-[#47545D]">Loading dates...</p></div>
     </div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified ISO 27001 Lead Auditor</h3>
@@ -323,7 +334,7 @@
       <div class="px-6 sm:px-8 py-4"><p class="text-sm text-[#47545D]">Loading dates...</p></div>
     </div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">ISO 27005 Information Security Risk Manager</h3>
@@ -335,7 +346,7 @@
       <div class="px-6 sm:px-8 py-4"><p class="text-sm text-[#47545D]">Loading dates...</p></div>
     </div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified ISO 27701 Lead Implementer</h3>
@@ -348,7 +359,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">The privacy extension to ISO 27001.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">ISO 42001 Lead Implementer</h3>
@@ -361,7 +372,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">AI management systems.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">ISO 42001 Lead Auditor</h3>
@@ -374,7 +385,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">AI management systems.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified ISO 31000 Lead Risk Manager</h3>
@@ -386,7 +397,7 @@
       <div class="px-6 sm:px-8 py-4"><p class="text-sm text-[#47545D]">Loading dates...</p></div>
     </div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified ISO 31000 Risk Analyst</h3>
@@ -398,7 +409,7 @@
       <div class="px-6 sm:px-8 py-4"><p class="text-sm text-[#47545D]">Loading dates...</p></div>
     </div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified ISO 22301 Lead Implementer</h3>
@@ -411,7 +422,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">Business continuity.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified ISO 22301 Lead Auditor</h3>
@@ -424,7 +435,7 @@
     </div>
     <div class="px-6 sm:px-8 py-4 bg-[#F7F9FA] border-t border-[#323F48]/10"><p class="text-sm text-[#47545D]">Business continuity.</p></div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified ISO 22361 Lead Crisis Manager</h3>
@@ -440,10 +451,10 @@
 
 <!-- CYBER &AMP; RESILIENCE -->
 <section id="cyber" class="scroll-mt-28 max-w-6xl mx-auto px-5 pt-10 pb-14">
-  <h2 class="font-display font-bold text-2xl sm:text-3xl text-[#1E2B34]">Cybersecurity &amp; resilience training</h2>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]">Cybersecurity &amp; resilience training</h2>
   <p class="text-[#47545D] mt-3 max-w-[62ch] leading-relaxed">For the people who keep organisations running when things go wrong.</p>
 
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified Cybersecurity Manager</h3>
@@ -455,7 +466,7 @@
       <div class="px-6 sm:px-8 py-4"><p class="text-sm text-[#47545D]">Loading dates...</p></div>
     </div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified Cyber Assurance Practitioner</h3>
@@ -467,7 +478,7 @@
       <div class="px-6 sm:px-8 py-4"><p class="text-sm text-[#47545D]">Loading dates...</p></div>
     </div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified Cyber Security Analyst</h3>
@@ -479,7 +490,7 @@
       <div class="px-6 sm:px-8 py-4"><p class="text-sm text-[#47545D]">Loading dates...</p></div>
     </div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Certified Operational Resilience Manager</h3>
@@ -491,7 +502,7 @@
       <div class="px-6 sm:px-8 py-4"><p class="text-sm text-[#47545D]">Loading dates...</p></div>
     </div>
   </article>
-  <article class="bg-white border border-[#323F48]/10 rounded-[10px] mt-6 overflow-hidden">
+  <article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">
     <div class="px-6 sm:px-8 pt-6 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">
       <div>
         <h3 class="font-display font-bold text-xl text-[#1E2B34]">Lead Disaster Recovery Manager</h3>
@@ -505,11 +516,18 @@
   </article>
 </section>
 
+<!-- MORE COURSES (renders automatically for any course not listed above) -->
+<section id="more" data-ttc-rest-section hidden class="scroll-mt-28 max-w-6xl mx-auto px-5 pt-2 pb-14">
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]">More courses</h2>
+  <p class="text-[#47545D] mt-3 max-w-[62ch] leading-relaxed">Newly published courses appear here automatically, straight from our booking system.</p>
+  <div data-ttc-rest></div>
+</section>
+
 <!-- HOW BOOKING WORKS -->
 <section id="how" class="scroll-mt-28 bg-[#323F48]">
   <div class="max-w-6xl mx-auto px-5 py-14 grid md:grid-cols-[0.9fr_1.1fr] gap-10 items-center">
     <div>
-      <h2 class="font-display font-bold text-2xl sm:text-3xl text-white">Booked in 3 steps, protected in 3 ways</h2>
+      <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white">Booked in 3 steps, protected in 3 ways</h2>
       <p class="text-[#C8D2D9] mt-4 leading-relaxed">Pick a date, book online, and your joining instructions arrive by email. If your plans change, you can transfer to another date of the same course yourself, free of charge, right up to the day before the course, straight from your booking email. Pay by card, by invoice with a PO reference, or by direct debit.</p>
     </div>
     <ul class="space-y-4 text-white text-[1.05rem]">
@@ -523,23 +541,23 @@
 <!-- ASK -->
 <section id="ask" class="scroll-mt-28 max-w-6xl mx-auto px-5 py-16 grid md:grid-cols-[0.9fr_1.1fr] gap-10">
   <div>
-    <h2 class="font-display font-bold text-2xl sm:text-3xl text-[#1E2B34]" style="text-wrap:balance">Not sure which course fits?</h2>
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]" style="text-wrap:balance">Not sure which course fits?</h2>
     <p class="text-[#47545D] mt-4 leading-relaxed">Tell us your role and what you are trying to achieve, and a course adviser will recommend the right course and dates. Booking for a team? One enquiry can cover several colleagues.</p>
     <a href="tel:+442038589207" class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1E2B34]"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
     <p class="text-sm text-[#47545D] mt-2">Our office team answers during UK business hours.</p>
   </div>
-  <form id="enquiry-form" action="https://lp-form-handler.claireljarrett.workers.dev/submit" method="POST" class="bg-white border border-[#323F48]/10 rounded-[10px] p-6 sm:p-8 space-y-4">
+  <form id="enquiry-form" action="https://lp-form-handler.claireljarrett.workers.dev/submit" method="POST" class="bg-white border border-[#323F48]/10 rounded-[8px] p-6 sm:p-8 space-y-4">
     <input type="hidden" name="project" value="the-training-centre">
     <input type="hidden" name="Course" value="Schedule enquiry">
     <div><label for="name" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Your name</label>
-      <input required type="text" id="name" name="name" class="w-full border border-[#323F48]/20 rounded-[6px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="name"></div>
+      <input required type="text" id="name" name="name" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="name"></div>
     <div><label for="email" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Work email</label>
-      <input required type="email" id="email" name="email" class="w-full border border-[#323F48]/20 rounded-[6px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="email"></div>
+      <input required type="email" id="email" name="email" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="email"></div>
     <div><label for="phone" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Phone number</label>
-      <input required type="tel" id="phone" name="phone" class="w-full border border-[#323F48]/20 rounded-[6px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="tel"></div>
+      <input required type="tel" id="phone" name="phone" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="tel"></div>
     <div><label for="message" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Your question <span class="font-normal text-[#47545D]">(optional)</span></label>
-      <textarea id="message" name="message" rows="3" class="w-full border border-[#323F48]/20 rounded-[6px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" placeholder="Which course, dates that suit you, team bookings, payment plans..."></textarea></div>
-    <button type="submit" class="w-full bg-[#13B4EA] hover:bg-[#0085B7] text-white font-semibold py-3.5 rounded-[6px]">Send my question</button>
+      <textarea id="message" name="message" rows="3" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" placeholder="Which course, dates that suit you, team bookings, payment plans..."></textarea></div>
+    <button type="submit" class="btn-solid w-full py-3.5">Send my question</button>
     <p id="form-note" class="text-xs text-[#47545D]">We reply the same working day. Your details go to our course advisers and nowhere else.</p>
   </form>
 </section>
@@ -558,8 +576,8 @@
 </footer>
 
 <div class="fixed bottom-0 inset-x-0 z-50 md:hidden bg-white border-t border-[#323F48]/15 px-4 py-3 flex gap-3">
-  <a href="tel:+442038589207" class="flex-1 text-center border border-[#13B4EA] text-[#0085B7] font-semibold py-3 rounded-[6px]">Call us</a>
-  <a href="#ask" class="flex-1 text-center bg-[#13B4EA] text-white font-semibold py-3 rounded-[6px]">Ask a question</a>
+  <a href="tel:+442038589207" class="btn-light flex-1 text-center py-3">Call us</a>
+  <a href="#ask" class="btn-solid flex-1 text-center py-3">Ask a question</a>
 </div>
 
 <script src="/assets/schedule-data.js"></script>
