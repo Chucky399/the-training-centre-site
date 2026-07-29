@@ -24,14 +24,25 @@
 
 <header class="bg-white border-b border-[#323F48]/10 sticky top-0 z-50">
   <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
-    <a href="/"><img src="/assets/ttc-logo.png" alt="The Training Centre. Learn. Evolve. Lead." class="h-9 sm:h-11 w-auto"></a>
-    <div class="flex items-center gap-3 sm:gap-5">
-      <a href="tel:+442038589207" class="hidden md:flex items-center gap-2 font-semibold text-[#1E2B34]"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
+    <a href="/" aria-label="The Training Centre home"><img src="/assets/ttc-logo.png" alt="The Training Centre. Learn. Evolve. Lead." class="h-9 sm:h-11 w-auto"></a>
+    <nav class="hidden lg:flex items-center gap-7 text-sm text-[#47545D]" aria-label="Site">
+      <a href="/#courses" class="hover:text-[#0085B7]">Courses</a>
+      <a href="/schedule/" class="font-semibold text-[#0085B7]">Course schedule</a>
+      <a href="/about/" class="hover:text-[#0085B7]">About us</a>
+      <a href="/insights/" class="hover:text-[#0085B7]">Insights</a>
+      <a href="/contact/" class="hover:text-[#0085B7]">Contact</a>
+    </nav>
+    <div class="flex items-center gap-2 sm:gap-4">
+      <a href="tel:+442038589207" class="hidden xl:flex items-center gap-2 font-semibold text-[#1E2B34] whitespace-nowrap"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
       <a href="#dates" class="hidden sm:inline-block bg-[#13B4EA] hover:bg-[#0085B7] text-white font-semibold text-sm px-5 py-2.5 rounded-[6px] whitespace-nowrap">See dates &amp; book</a>
-      <a href="tel:+442038589207" class="sm:hidden bg-[#13B4EA] text-white font-semibold text-sm px-4 py-2.5 rounded-[6px] whitespace-nowrap">Call us</a>
+      <a href="tel:+442038589207" class="lg:hidden flex items-center justify-center w-11 h-11 rounded-[6px] border border-[#13B4EA] text-[#0085B7]" aria-label="Call us on 020 3858 9207"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></a>
+      <button id="menu-toggle" type="button" class="lg:hidden flex items-center justify-center w-11 h-11 rounded-[6px] border border-[#323F48]/20 text-[#1E2B34]" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg id="menu-icon-open" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg id="menu-icon-close" class="w-6 h-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
     </div>
   </div>
-  <nav class="jumpnav border-t border-[#323F48]/10 bg-white overflow-x-auto whitespace-nowrap px-5 hidden md:block">
+<nav class="jumpnav border-t border-[#323F48]/10 bg-white overflow-x-auto whitespace-nowrap px-5 hidden md:block">
     <div class="max-w-6xl mx-auto flex gap-7 text-sm py-2.5 text-[#47545D]">
       <a href="#dates" class="hover:text-[#0085B7]">Dates &amp; times</a>
       <a href="#who" class="hover:text-[#0085B7]">Who it&rsquo;s for</a>
@@ -41,6 +52,20 @@
       <a href="#dates" class="font-semibold text-[#0085B7]">Book</a>
     </div>
   </nav>
+  <div id="mobile-menu" hidden class="lg:hidden border-t border-[#323F48]/10 bg-white">
+    <nav class="divide-y divide-[#323F48]/10" aria-label="Site menu">
+      <a href="/" class="block px-5 py-3.5 font-semibold text-[#1E2B34]">Home</a>
+      <a href="/#courses" class="block px-5 py-3.5 font-semibold text-[#1E2B34]">Courses</a>
+      <a href="/schedule/" class="block px-5 py-3.5 font-semibold text-[#0085B7]">Course schedule</a>
+      <a href="/about/" class="block px-5 py-3.5 font-semibold text-[#1E2B34]">About us</a>
+      <a href="/insights/" class="block px-5 py-3.5 font-semibold text-[#1E2B34]">Insights</a>
+      <a href="/contact/" class="block px-5 py-3.5 font-semibold text-[#1E2B34]">Contact</a>
+    </nav>
+    <div class="px-5 py-4 border-t border-[#323F48]/10 flex flex-col gap-3">
+      <a href="#dates" class="mobile-menu-cta block text-center bg-[#13B4EA] text-white font-semibold py-3.5 rounded-[6px]">See dates &amp; book</a>
+      <a href="tel:+442038589207" class="flex items-center justify-center gap-2 font-semibold text-[#1E2B34] py-2"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
+    </div>
+  </div>
 </header>
 
 <nav class="max-w-6xl mx-auto px-5 pt-5 text-sm text-[#47545D]" aria-label="Breadcrumb">
@@ -313,8 +338,7 @@
     <a href="tel:+442038589207" class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1E2B34]"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
     <p class="text-sm text-[#47545D] mt-2">Our office team answers during UK business hours.</p>
   </div>
-  <!-- DEV vs LIVE rule: form is layout-only until Claire says wire it (KV key: the-training-centre) -->
-  <form id="enquiry-form" class="bg-white border border-[#323F48]/10 rounded-[10px] p-6 sm:p-8 space-y-4">
+  <form id="enquiry-form" action="https://lp-form-handler.claireljarrett.workers.dev/submit" method="POST" class="bg-white border border-[#323F48]/10 rounded-[10px] p-6 sm:p-8 space-y-4">
     <input type="hidden" name="project" value="the-training-centre">
     <input type="hidden" name="Course" value="ISO standards">
     <div><label for="name" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Your name</label>
@@ -336,7 +360,7 @@
       <p class="text-white font-semibold">The Training Centre</p>
       <p class="mt-1">020 3858 9207 &middot; <a href="mailto:info@the-training-centre.com" class="underline underline-offset-2">info@the-training-centre.com</a></p>
     </div>
-    <div class="flex gap-6">
+    <div class="flex flex-wrap gap-x-6 gap-y-2">
       <a href="/schedule/" class="hover:text-white">Course schedule</a>
       <a href="https://www.the-training-centre.com/w/uk/termsandconditions" target="_blank" rel="noopener" class="hover:text-white">Terms &amp; privacy</a>
     </div>
@@ -351,12 +375,40 @@
 <script src="/assets/schedule-data.js"></script>
 <script src="/assets/schedule.js"></script>
 <script>
-// Demo build: form not wired yet (goes live with the site, KV key exists).
 document.getElementById('enquiry-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  document.getElementById('form-note').textContent = 'Demo build: this form is not connected yet. It goes live with the new site.';
+  var form = this;
+  var btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  fetch('https://lp-form-handler.claireljarrett.workers.dev/submit', { method: 'POST', body: new FormData(form) })
+    .then(function() { window.location.href = '/thank-you/'; })
+    .catch(function() { btn.disabled = false; btn.textContent = 'Send my question'; alert('Something went wrong. Please call us on 020 3858 9207.'); });
 });
 </script>
 
+
+<script>
+(function () {
+  var btn = document.getElementById('menu-toggle');
+  var menu = document.getElementById('mobile-menu');
+  if (!btn || !menu) return;
+  var io = document.getElementById('menu-icon-open');
+  var ic = document.getElementById('menu-icon-close');
+  function setOpen(open) {
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    io.classList.toggle('hidden', open);
+    ic.classList.toggle('hidden', !open);
+  }
+  btn.addEventListener('click', function () { setOpen(menu.hidden); });
+  menu.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { setOpen(false); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !menu.hidden) { setOpen(false); btn.focus(); }
+  });
+})();
+</script>
 </body>
 </html>
