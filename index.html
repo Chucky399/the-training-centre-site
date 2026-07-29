@@ -70,31 +70,49 @@
 </header>
 
 <!-- HERO -->
-<section class="bg-[#1E2B34]">
-  <div class="max-w-6xl mx-auto px-5 py-12 md:py-16 grid md:grid-cols-[1.15fr_0.85fr] gap-10 md:gap-14 items-start">
+<section class="relative overflow-hidden" style="background:linear-gradient(115deg,#16232C 0%,#1E2B34 45%,#0085B7 100%)">
+  <svg class="absolute -right-20 top-1/2 -translate-y-1/2 h-[135%] w-auto hidden lg:block" viewBox="0 0 600 600" fill="none" aria-hidden="true">
+    <path d="M600 30 300 300l300 270" stroke="#13B4EA" stroke-width="10" opacity=".85"/>
+    <path d="M600 105 380 300l220 195" stroke="#13B4EA" stroke-width="7" opacity=".6"/>
+    <path d="M600 180 460 300l140 120" stroke="#13B4EA" stroke-width="5" opacity=".4"/>
+    <path d="M600 245 540 300l60 55" stroke="#13B4EA" stroke-width="3" opacity=".25"/>
+  </svg>
+  <div class="relative max-w-6xl mx-auto px-5 py-14 md:py-20 grid md:grid-cols-[1.1fr_0.9fr] gap-10 md:gap-14 items-center">
     <div>
       <p class="text-[#13B4EA] font-display font-bold uppercase tracking-[0.14em] text-xs">Certification training &middot; live online</p>
-      <h1 class="font-display font-extrabold text-white text-3xl sm:text-4xl md:text-[2.7rem] leading-tight mt-4 max-w-[22ch]" style="text-wrap:balance">The UK&rsquo;s No 1 IAPP training provider</h1>
-      <p class="text-[#C8D2D9] text-lg leading-relaxed mt-5 max-w-[56ch]">CIPP/E, CIPM, AIGP, DPO, AI safety and ISO certification courses, taught live online in small groups by trainers with 25+ years in industry who still do the work they teach. 3,500+ delegates trained since 2017.</p>
-      <div class="flex flex-wrap items-center gap-4 mt-8">
-        <a href="/schedule/" class="btn-solid px-7 py-3.5">See the course schedule</a>
-        <a href="#courses" class="font-semibold text-white underline decoration-[#13B4EA] decoration-2 underline-offset-4">Browse the courses</a>
+      <h1 class="font-display font-extrabold text-white text-5xl sm:text-6xl md:text-[4.2rem] leading-[1.04] mt-4">Learn. Evolve. <span class="text-[#13B4EA]">Lead.</span></h1>
+      <p class="text-[#C8D2D9] text-lg leading-relaxed mt-6 max-w-[54ch]">The UK&rsquo;s No 1 IAPP training provider. CIPP/E, CIPM, AIGP, DPO, AI safety and ISO certification courses, taught live online in small groups by trainers with 25+ years in industry who still do the work they teach.</p>
+      <div class="flex flex-wrap items-center gap-5 mt-9">
+        <a href="#courses" class="btn-light px-6 py-3.5 inline-flex items-center gap-2.5">Explore the courses<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></a>
+        <a href="/schedule/" class="btn-light px-6 py-3.5 inline-flex items-center gap-2.5">Course schedule<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></a>
       </div>
-      <p class="text-sm text-[#8FA0AB] mt-6">Exam and IAPP membership included on IAPP courses. Fail your exam first time and we train you again free.</p>
+      <p class="text-sm text-[#8FA0AB] mt-6">3,500+ delegates trained since 2017. Exam and IAPP membership included on IAPP courses.</p>
     </div>
-    <aside class="border border-white/10 rounded-[8px] p-6 sm:p-7">
+    <aside class="relative bg-white rounded-[8px] card-pop p-6 sm:p-7">
       <div class="flex items-baseline justify-between gap-4">
-        <h2 class="font-display font-bold text-white text-lg">Starting soon</h2>
-        <p class="text-xs text-[#8FA0AB]">Live from our booking system</p>
+        <h2 class="font-display font-bold text-[#1E2B34] text-lg">Starting soon</h2>
+        <p class="text-xs text-[#47545D]">Live from our booking system</p>
       </div>
-      <div data-ttc-next="5" class="divide-y divide-white/10 mt-2"></div>
-      <a href="/schedule/" class="mt-4 inline-block font-semibold text-[#13B4EA] text-sm">See every course and date &rarr;</a>
+      <div data-ttc-next="5" class="divide-y divide-[#323F48]/10 mt-2"></div>
+      <a href="/schedule/" class="mt-4 inline-block font-semibold text-[#0085B7] text-sm">See every course and date &rarr;</a>
     </aside>
   </div>
 </section>
 
-<!-- STATS -->
+<!-- IMPACT -->
 <section class="bg-white border-b border-[#323F48]/10">
+  <div class="max-w-6xl mx-auto px-5 py-12 md:py-14 text-center">
+    <h2 class="font-display font-extrabold uppercase leading-tight text-3xl sm:text-4xl md:text-[2.8rem]"><span class="text-[#0085B7]">5 subject areas. 30 certified courses.</span><br><span class="text-[#1E2B34]">Live dates on every one.</span></h2>
+    <div class="flex flex-wrap justify-center gap-4 sm:gap-5 mt-9">
+      <a href="#courses" class="btn-light text-sm px-5 py-2.5">Explore our course catalogue</a>
+      <a href="/schedule/" class="btn-light text-sm px-5 py-2.5">View the course schedule</a>
+      <a href="#ask" class="btn-light text-sm px-5 py-2.5">Speak to a course adviser</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="bg-[#F7F9FA] border-b border-[#323F48]/10">
   <div class="max-w-6xl mx-auto px-5 py-8 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-6 md:divide-x md:divide-[#323F48]/10">
     <div class="md:px-6 md:first:pl-0"><p class="tnum font-display text-2xl font-semibold text-[#1E2B34]">No 1</p><p class="text-sm text-[#47545D] mt-1">IAPP training provider in the UK</p></div>
     <div class="md:px-6"><p class="tnum font-display text-2xl font-semibold text-[#1E2B34]">3,500+</p><p class="text-sm text-[#47545D] mt-1">delegates trained</p></div>
@@ -248,7 +266,7 @@
 <section id="ask" class="scroll-mt-24 bg-white border-t border-[#323F48]/10">
   <div class="max-w-6xl mx-auto px-5 py-16 grid md:grid-cols-[0.9fr_1.1fr] gap-10">
     <div>
-      <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]" style="text-wrap:balance">Not sure which course fits?</h2>
+      <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]" style="text-wrap:balance">Speak to a course adviser</h2>
       <p class="text-[#47545D] mt-4 leading-relaxed">Tell us your role and what you are trying to achieve, and a course adviser will recommend the right course and dates. Booking for a team? One enquiry can cover several colleagues.</p>
       <a href="tel:+442038589207" class="mt-6 inline-flex items-center gap-2 font-semibold text-[#1E2B34]"><span class="text-[#13B4EA]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8 7 15 15 15l2-4-4-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4-4 2z"/></svg></span>020 3858 9207</a>
       <p class="text-sm text-[#47545D] mt-2">Our office team answers during UK business hours.</p>
@@ -271,17 +289,43 @@
 </section>
 
 <footer class="bg-[#1E2B34] text-[#8FA0AB]">
-  <div class="max-w-6xl mx-auto px-5 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm">
+  <div class="max-w-6xl mx-auto px-5 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 text-sm">
     <div>
-      <p class="text-white font-semibold">The Training Centre</p>
-      <p class="mt-1">020 3858 9207 &middot; <a href="mailto:info@the-training-centre.com" class="underline underline-offset-2">info@the-training-centre.com</a></p>
+      <p class="text-white font-display font-bold text-base">The Training Centre</p>
+      <p class="mt-3">Certified privacy, data protection, AI and ISO training, taught live online by trainers who still do the job.</p>
+      <a href="tel:+442038589207" class="block mt-4 font-semibold text-white hover:text-[#13B4EA]">020 3858 9207</a>
+      <a href="mailto:info@the-training-centre.com" class="block mt-1 hover:text-white">info@the-training-centre.com</a>
     </div>
-    <div class="flex flex-wrap gap-x-6 gap-y-2">
-      <a href="/schedule/" class="hover:text-white">Course schedule</a>
-      <a href="/about/" class="hover:text-white">About us</a>
-      <a href="/insights/" class="hover:text-white">Insights</a>
-      <a href="/contact/" class="hover:text-white">Contact</a>
-      <a href="https://www.the-training-centre.com/w/uk/termsandconditions" target="_blank" rel="noopener" class="hover:text-white">Terms &amp; privacy</a>
+    <div>
+      <p class="text-white font-display font-bold text-base">Courses</p>
+      <ul class="mt-3 space-y-2">
+        <li><a href="/schedule/#iapp" class="hover:text-white">IAPP certification</a></li>
+        <li><a href="/schedule/#data-protection" class="hover:text-white">Data protection &amp; GDPR</a></li>
+        <li><a href="/schedule/#ai" class="hover:text-white">AI safety &amp; governance</a></li>
+        <li><a href="/schedule/#iso" class="hover:text-white">ISO standards</a></li>
+        <li><a href="/schedule/#cyber" class="hover:text-white">Cybersecurity &amp; resilience</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-white font-display font-bold text-base">Quick links</p>
+      <ul class="mt-3 space-y-2">
+        <li><a href="/schedule/" class="hover:text-white">Course schedule</a></li>
+        <li><a href="/about/" class="hover:text-white">About us</a></li>
+        <li><a href="/insights/" class="hover:text-white">Insights</a></li>
+        <li><a href="/contact/" class="hover:text-white">Speak to a course adviser</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-white font-display font-bold text-base">Legal</p>
+      <ul class="mt-3 space-y-2">
+        <li><a href="https://www.the-training-centre.com/w/uk/termsandconditions" target="_blank" rel="noopener" class="hover:text-white">Terms &amp; conditions</a></li>
+        <li><a href="https://www.the-training-centre.com/w/uk/privacypolicy" target="_blank" rel="noopener" class="hover:text-white">Privacy policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-5 py-5 text-xs leading-relaxed">
+      <p>&copy; 2026 The Training Centre. The Training Centre Ltd is registered in England, company number 15746376. Registered office: Seedbed Business Centre, Vanguard Way, Shoeburyness, Essex, SS3 9QY. VAT number GB476426465.</p>
     </div>
   </div>
 </footer>

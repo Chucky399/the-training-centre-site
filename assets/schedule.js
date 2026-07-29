@@ -77,19 +77,22 @@
                     : '<p class="font-semibold text-[#1E2B34]">' + esc(ev.dayLabel) + '</p><p class="text-sm text-[#47545D]">' + esc(ev.timeLabel) + ' · live online</p>') +
         '</div></div>' +
       (ev.priceLabel ? '<p class="font-display font-bold text-[#1E2B34]">' + esc(ev.priceLabel) + '</p>' : '') +
-      '<a href="' + esc(ev.book) + '" target="_blank" rel="noopener" class="btn-solid ml-auto text-sm px-5 py-2.5 whitespace-nowrap">Book this date</a>' +
+      (ev.full
+        ? '<span class="ml-auto text-sm font-semibold text-[#47545D] border border-[#323F48]/20 rounded-[4px] px-5 py-2.5 whitespace-nowrap">Fully booked</span>'
+        : '<a href="' + esc(ev.book) + '" target="_blank" rel="noopener" class="btn-solid ml-auto text-sm px-5 py-2.5 whitespace-nowrap">Book this date</a>') +
       '</div>';
   }
 
+  // Light-card variant used inside the white "Starting soon" panel.
   function heroRowHtml(ev) {
     return '<a href="' + esc(ev.book) + '" target="_blank" rel="noopener" class="flex items-center gap-4 py-3.5 group">' +
-      '<div class="w-14 shrink-0 text-center border border-white/20 rounded-[4px] py-1.5">' +
-        '<p class="font-display font-extrabold text-white leading-none text-sm">' + esc(ev.tileTop) + '</p>' +
-        '<p class="text-[10px] font-semibold uppercase tracking-wide text-[#8FA0AB] mt-1">' + esc(ev.tileMonth) + '</p></div>' +
+      '<div class="w-14 shrink-0 text-center border border-[#323F48]/15 rounded-[4px] py-1.5">' +
+        '<p class="font-display font-extrabold text-[#1E2B34] leading-none text-sm">' + esc(ev.tileTop) + '</p>' +
+        '<p class="text-[10px] font-semibold uppercase tracking-wide text-[#47545D] mt-1">' + esc(ev.tileMonth) + '</p></div>' +
       '<div class="min-w-0 flex-1">' +
-        '<p class="font-semibold text-white text-sm leading-snug group-hover:text-[#13B4EA]">' + esc(ev.name) + '</p>' +
-        '<p class="text-xs text-[#8FA0AB] mt-0.5">' + esc(ev.dayLabel) + (ev.priceLabel ? ' · ' + esc(ev.priceLabel) : '') + '</p></div>' +
-      '<span class="text-[#13B4EA]" aria-hidden="true">&rarr;</span></a>';
+        '<p class="font-semibold text-[#1E2B34] text-sm leading-snug group-hover:text-[#0085B7]">' + esc(ev.name) + '</p>' +
+        '<p class="text-xs text-[#47545D] mt-0.5">' + esc(ev.dayLabel) + (ev.priceLabel ? ' · ' + esc(ev.priceLabel) : '') + '</p></div>' +
+      '<span class="text-[#0085B7]" aria-hidden="true">&rarr;</span></a>';
   }
 
   /* ---------- DOM fill ---------- */
@@ -140,10 +143,21 @@
       if (wrap) wrap.hidden = false;
     });
 
-    // Next-N across all courses: <div data-ttc-next="4">
+    // Next-N across all courses: <div data-ttc-next="4"> (sold-out runs skipped)
     document.querySelectorAll("[data-ttc-next]").forEach(function (el) {
       var max = +(el.getAttribute("data-ttc-next") || 4);
-      el.innerHTML = list.slice(0, max).map(heroRowHtml).join("");
+      var open = list.filter(function (ev) { return !ev.full; });
+      el.innerHTML = open.length
+        ? open.slice(0, max).map(heroRowHtml).join("")
+        : '<p class="text-sm text-[#47545D] py-4">New dates are being scheduled. <a href="/schedule/" class="font-semibold text-[#0085B7]">See the course schedule</a>.</p>';
+    });
+
+    // "From £X" across a set of codes: <span data-ttc-minprice="ISO2,ISO21,...">
+    document.querySelectorAll("[data-ttc-minprice]").forEach(function (el) {
+      var codes = el.getAttribute("data-ttc-minprice").split(",");
+      var prices = [];
+      codes.forEach(function (c) { (byCode[c.trim()] || []).forEach(function (ev) { if (ev.price != null) prices.push(ev.price); }); });
+      if (prices.length) el.textContent = "From " + fmtPrice(Math.min.apply(null, prices));
     });
 
     // Inline next date: <span data-ttc-nextdate="CERT7">
@@ -178,6 +192,9 @@
       // Book straight into Arlo registration (the event page's own Book Now target);
       // fall back to the per-date event page if a register link is ever missing.
       var register = (ev.RegistrationInfo || {}).RegisterUri;
+      // Only trust booking URLs on the client's own domain (guards against a
+      // poisoned feed rendering e.g. a javascript: URI as a clickable button).
+      if (register && register.indexOf("https://www.the-training-centre.com/") !== 0) register = null;
       return {
         id: ev.EventID,
         code: ev.TemplateCode || "",
