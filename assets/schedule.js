@@ -20,6 +20,14 @@
 
   var API_BASE = ARLO_HOST + "/api/2012-02-01/pub/resources/eventsearch/";
   var API_FIELDS = "EventID,Name,StartDateTime,EndDateTime,ViewUri,TemplateCode,AdvertisedOffers,IsFull,RegistrationInfo";
+  /* Prices we deliberately hold, mirroring PRICE_HOLD in _build_pages.py.
+     Arlo has CYBE5 entered the other way round to every other course (GBP395
+     inclusive, GBP329.17 exclusive), so taking the exclusive figure here would
+     CHANGE a price John advertises rather than restate it. Without this the
+     live re-render would silently overwrite the held price the moment the
+     course gets a scheduled date. Remove once John confirms. */
+  var PRICE_HOLD = { "CYBE5": 395 };
+
   var CACHE_KEY = "ttc-schedule-v2";
   var CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 
@@ -243,7 +251,9 @@
         // AI templates (AIPR/AIST/AIAG) and on nothing else, so the tax-inclusive field
         // made those three look 20% dearer than the rest of the catalogue.
         // His own T&Cs already say "All Prices exclude VAT".
-        price: offer.AmountTaxExclusive != null ? offer.AmountTaxExclusive : null,
+        price: Object.prototype.hasOwnProperty.call(PRICE_HOLD, ev.TemplateCode)
+          ? PRICE_HOLD[ev.TemplateCode]
+          : (offer.AmountTaxExclusive != null ? offer.AmountTaxExclusive : null),
         book: register || fallback,
         full: !!ev.IsFull
       };
