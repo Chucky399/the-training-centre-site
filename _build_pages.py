@@ -11,7 +11,13 @@ from html.parser import HTMLParser
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
-API = ("https://www.the-training-centre.com/api/2012-02-01/pub/resources/eventtemplates/"
+# Arlo's OWN hostname - deliberately NOT www.the-training-centre.com.
+# www is a CNAME to this host today, which is why the old site, the checkout and this
+# API all answer on it. Once www serves the new site, anything addressed to www hits
+# the new site instead and the feed/booking break. Address Arlo directly.
+ARLO_HOST = "https://marketstreetconsultantsltdevents.arlo.co"
+
+API = (ARLO_HOST + "/api/2012-02-01/pub/resources/eventtemplates/"
        "?format=json&top=20&fields=TemplateID,Code,Name,Description,AdvertisedDuration,Categories,BestAdvertisedOffers")
 
 # Courses that already have hand-built pages (do not regenerate these).
@@ -77,7 +83,7 @@ def fetch_templates():
         d = fetch_json(url)
         items += d.get("Items", [])
         nxt = d.get("NextPageUri")
-        url = (nxt if nxt.startswith("http") else "https://www.the-training-centre.com" + nxt) if nxt else None
+        url = (nxt if nxt.startswith("http") else ARLO_HOST + nxt) if nxt else None
         time.sleep(1)
     return items
 
@@ -331,8 +337,8 @@ FOOTER = """
     <div>
       <p class="text-white font-display font-bold text-base">Legal</p>
       <ul class="mt-3 space-y-2">
-        <li><a href="https://www.the-training-centre.com/w/uk/termsandconditions" target="_blank" rel="noopener" class="hover:text-white">Terms &amp; conditions</a></li>
-        <li><a href="https://www.the-training-centre.com/w/uk/privacypolicy" target="_blank" rel="noopener" class="hover:text-white">Privacy policy</a></li>
+        <li><a href="/terms/" class="hover:text-white">Terms &amp; conditions</a></li>
+        <li><a href="/privacy/" class="hover:text-white">Privacy notice</a></li>
       </ul>
     </div>
   </div>

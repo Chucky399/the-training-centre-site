@@ -1,12 +1,24 @@
 /* The Training Centre - live course schedule renderer.
-   Data source: Arlo Pub API (no auth, CORS-enabled) on the-training-centre.com.
+   Data source: Arlo Pub API (no auth, CORS-enabled) on ARLO_HOST below.
    Strategy: render immediately from the baked snapshot (schedule-data.js),
    then refresh from the live API at most once per hour per browser
    (localStorage cache) so page views never hammer the API (429 guard). */
 (function () {
   "use strict";
 
-  var API_BASE = "https://www.the-training-centre.com/api/2012-02-01/pub/resources/eventsearch/";
+  /* Arlo's OWN hostname - not www.the-training-centre.com.
+     www.the-training-centre.com is currently a CNAME to this host, which is why the
+     old site, the booking checkout and this API all answer on it today. The moment
+     www is repointed at Cloudflare Pages for the new site, anything addressed to www
+     would hit the new site instead: the schedule feed would stop refreshing and every
+     Book button would 404. Addressing Arlo directly keeps booking and the live feed
+     working straight through the DNS cutover.
+     If John later asks Arlo for a branded checkout domain (e.g. book.the-training-centre.com
+     CNAME'd to Arlo), this one line is the only change needed. */
+  var ARLO_HOST = "https://marketstreetconsultantsltdevents.arlo.co";
+  var ARLO_ALIASES = ["https://www.the-training-centre.com", "https://the-training-centre.com", ARLO_HOST];
+
+  var API_BASE = ARLO_HOST + "/api/2012-02-01/pub/resources/eventsearch/";
   var API_FIELDS = "EventID,Name,StartDateTime,EndDateTime,ViewUri,TemplateCode,AdvertisedOffers,IsFull,RegistrationInfo";
   var CACHE_KEY = "ttc-schedule-v2";
   var CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
@@ -185,16 +197,31 @@
     return null;
   }
 
+  /* Send every booking/event link to Arlo, whatever host the feed hands us.
+     Arlo's feed returns absolute URLs on www.the-training-centre.com; once www serves
+     the new site those would land on the wrong place, so we rewrite the host here.
+     Anything that is not a plain http(s) URL on a known Arlo alias is dropped, which
+     keeps the original guard against a poisoned feed rendering e.g. a javascript:
+     URI as a clickable Book button. */
+  function toArlo(u) {
+    if (!u || typeof u !== "string") return null;
+    if (u.charAt(0) === "/") return ARLO_HOST + u;           // relative -> Arlo
+    for (var i = 0; i < ARLO_ALIASES.length; i++) {
+      if (u.indexOf(ARLO_ALIASES[i] + "/") === 0) {
+        return ARLO_HOST + u.slice(ARLO_ALIASES[i].length);
+      }
+    }
+    return null;                                              // unknown host -> refuse
+  }
+
   function slim(items) {
     return items.map(function (ev) {
       var offer = ((ev.AdvertisedOffers || [])[0] || {}).OfferAmount || {};
       var view = ev.ViewUri || "";
       // Book straight into Arlo registration (the event page's own Book Now target);
       // fall back to the per-date event page if a register link is ever missing.
-      var register = (ev.RegistrationInfo || {}).RegisterUri;
-      // Only trust booking URLs on the client's own domain (guards against a
-      // poisoned feed rendering e.g. a javascript: URI as a clickable button).
-      if (register && register.indexOf("https://www.the-training-centre.com/") !== 0) register = null;
+      var register = toArlo((ev.RegistrationInfo || {}).RegisterUri);
+      var fallback = toArlo(view.replace("/uk/courses/", "/w/uk/courses/") + "/" + ev.EventID);
       return {
         id: ev.EventID,
         code: ev.TemplateCode || "",
@@ -202,7 +229,7 @@
         start: ev.StartDateTime || "",
         end: ev.EndDateTime || "",
         price: offer.AmountTaxInclusive != null ? offer.AmountTaxInclusive : null,
-        book: register || (view.replace("/uk/courses/", "/w/uk/courses/") + "/" + ev.EventID),
+        book: register || fallback,
         full: !!ev.IsFull
       };
     });
@@ -216,7 +243,7 @@
       acc = acc.concat(d.Items || []);
       var next = d.NextPageUri;
       if (next && acc.length < 400) {
-        fetchPage(next.indexOf("http") === 0 ? next : "https://www.the-training-centre.com" + next, acc, done, fail);
+        fetchPage(next.indexOf("http") === 0 ? next : ARLO_HOST + next, acc, done, fail);
       } else { done(acc); }
     }).catch(fail);
   }
