@@ -26,6 +26,7 @@ site is noindex until go-live, so they are inert now and correct the moment the
 domain moves.
 """
 import datetime
+import html as html_mod
 import json
 import pathlib
 import re
@@ -125,8 +126,11 @@ def build_block(f):
     d = re.search(r'<meta name="description" content="(.*?)">', html, re.S)
     if not t:
         return None
-    title = re.sub(r"\s+", " ", t.group(1)).strip()
-    desc = re.sub(r"\s+", " ", d.group(1)).strip() if d else ""
+    # Decode first, then re-escape. The title and description are already
+    # HTML-escaped in the page, so escaping them again turns "&amp;" into
+    # "&amp;amp;" and the ampersand shows up literally in link previews.
+    title = html_mod.unescape(re.sub(r"\s+", " ", t.group(1)).strip())
+    desc = html_mod.unescape(re.sub(r"\s+", " ", d.group(1)).strip()) if d else ""
     url = page_url(f)
 
     lines = [START,
