@@ -72,6 +72,113 @@ CATEGORY_INTROS = {  # 1 factual line each; counts are injected from live data
     "BCS Training Courses": "Official BCS artificial intelligence qualifications: Essentials and Foundation certificates.",
 }
 
+# --------------------------------------------------------------- page metadata
+# Written per course rather than derived, because the derived version truncated
+# descriptions mid-word and ran titles past what Google will display.
+# Titles are kept to ~38 chars so that with " | The Training Centre" they land
+# under 60. Descriptions target 130-165. Every figure here is from the Arlo feed
+# or the About page stat block; nothing is invented.
+META = {
+    "AIAG": ("AI Agents Foundation & Practitioner",
+             "Build and govern AI agents that run real business workflows. 4 days live online, \u00a31,795, taught by practitioners with 25+ years in the field."),
+    "AIGO": ("AIGP Certification Course",
+             "The IAPP's AI Governance Professional certification, taught on official materials. 2 days live online, \u00a31,550, exam and IAPP membership included."),
+    "AIPR": ("AI Productivity Training Course",
+             "Put AI to work across your team's day-to-day: prompting, content, research and analysis. 4 days live online, \u00a31,795, capped at 15 delegates."),
+    "AIST": ("AI Strategy & Governance Course",
+             "AI strategy and governance in one programme: ROI mapping, global regulation, IP and data risk, procurement. 4 days live online, \u00a31,795."),
+    "ARTI1": ("AI for Project Managers Course",
+              "AI applied to real project delivery: core concepts, predictive analytics and smart resource allocation. 1 day live online plus support, \u00a31,395."),
+    "BCSE": ("BCS Essentials in AI Certificate",
+             "The official BCS Essentials Certificate in Artificial Intelligence: key AI terminology, tools, and what they mean for society. 1 day live online, \u00a3495."),
+    "BCSF": ("BCS Foundation Certificate in AI",
+             "The official BCS Foundation Certificate in Artificial Intelligence, the step up from Essentials. 3 days live online, \u00a31,095, capped at 15 delegates."),
+    "CERT13": ("CDPO Certification Course",
+               "Three days covering the whole DPO role, taught by working DPOs. Certified Data Protection Officer training, live online, \u00a31,450, exam included."),
+    "CERT14": ("Certified GDPR Foundation",
+               "Get properly grounded in the GDPR and the UK Data Protection Act 2018. Certified GDPR Foundation, 2 days live online, \u00a3595, capped at 15 delegates."),
+    "CERT16": ("CIPT Certification Course",
+               "Privacy engineering for the people who build and run the systems. IAPP CIPT, 2 days live online, \u00a31,395, exam and IAPP membership included."),
+    "CERT27": ("CIPA Certification Course",
+               "Audit privacy programmes with confidence. Certified Information Privacy Auditor, 3 days live online, \u00a31,250, taught by people who still do the job."),
+    "CERT28": ("ISO 22361 Lead Crisis Manager",
+               "Plan, run and lead crisis response to ISO 22361. Certified Lead Crisis Manager, 3 days live online, \u00a31,450, taught by practitioners, not career trainers."),
+    "CERT30": ("Operational Resilience Manager",
+               "Lead operational resilience across the organisation. Certified Operational Resilience Manager, 3 days live online, \u00a31,450, capped at 15 delegates."),
+    "CERT7": ("CIPP/E Certification Course",
+              "The recognised benchmark for European data protection law. IAPP CIPP/E, 2 days live online, \u00a31,395, exam and IAPP membership included."),
+    "CERT8": ("CIPM Certification Course",
+              "The privacy programme management credential that pairs with CIPP/E. IAPP CIPM, 2 days live online, \u00a31,395, exam and IAPP membership included."),
+    "CYBE4": ("Cyber Assurance Practitioner",
+              "Build and evidence cyber assurance that stands up to scrutiny. Certified Cyber Assurance Practitioner, 3 days live online, \u00a31,450, exam included."),
+    "CYBE5": ("Cyber Security Foundation",
+              "A single day to get grounded in cyber security fundamentals, for teams who need the basics right. Live online, \u00a3395, capped at 15 delegates."),
+    "EURO": ("DPO Ready | CIPP/E and CIPM in a Week",
+             "CIPP/E and CIPM combined in one week, the fastest route to both IAPP credentials. 4 days live online, \u00a32,750, exams and IAPP membership included."),
+    "GDPR": ("GDPR Awareness Training",
+             "Our 1 day workshop on Data Protection Act 2018 and GDPR obligations, worth 8 CPD hours. Live online, \u00a3325, capped at 15 delegates."),
+    "ISO2": ("ISO 27001 Lead Implementer",
+             "Implement an ISO 27001 information security management system end to end. Certified Lead Implementer, 3 days live online, \u00a31,450."),
+    "ISO21": ("ISO 27001 Lead Auditor",
+              "Plan and lead ISO 27001 audits to ISO 19011. Certified ISO 27001 Lead Auditor, 3 days live online, \u00a31,450, taught by working auditors."),
+    "ISO210": ("ISO 27701 Lead Implementer",
+               "The privacy extension to ISO 27001. Certified ISO 27701 Lead Implementer, 3 days live online, \u00a31,450, taught by practitioners with 25+ years' experience."),
+    "ISO212": ("ISO 27005 Risk Manager",
+               "Run an effective information security risk process built on ISO 27005. 3 days live online, \u00a31,450, capped at 15 delegates."),
+    "ISO213": ("ISO 27035 Lead Incident Manager",
+               "Build and lead incident response to ISO 27035. Certified Lead Incident Manager, 3 days live online, \u00a31,450, taught by people who still do the job."),
+    "ISO214": ("Certified Cyber Security Analyst",
+               "Internet, web and network security and how they fit together. Certified Cyber Security Analyst, 2 days live online, \u00a3695, capped at 15 delegates."),
+    "ISO23": ("ISO 22301 Lead Auditor",
+              "Plan and carry out business continuity audits to ISO 22301 and ISO 19011. Certified Lead Auditor, 3 days live online, \u00a31,450."),
+    "ISO24": ("ISO 22301 Lead Implementer",
+              "Implement a business continuity management system to ISO 22301. Certified Lead Implementer, 3 days live online, \u00a31,450, capped at 15 delegates."),
+    "ISO25": ("Certified Cybersecurity Manager",
+              "Lead cyber security across an organisation, not just the tooling. Certified Cybersecurity Manager, 3 days live online, \u00a31,450, capped at 15 delegates."),
+    "ISO3": ("ISO 31000 Lead Risk Manager",
+             "Build a risk management framework on ISO 31000 that the business will actually use. Certified Lead Risk Manager, 3 days live online, \u00a31,450."),
+    "ISO35": ("ISO 31000 Risk Analyst",
+              "The analyst route into ISO 31000 risk management. Certified ISO 31000 Risk Analyst, 3 days live online, \u00a31,250, capped at 15 delegates."),
+    "ISO43": ("ISO 42001 Lead Implementer",
+              "Implement an AI management system to ISO 42001, the first international AI standard. 3 days live online, \u00a31,450, capped at 15 delegates."),
+    "ISO44": ("ISO 42001 Lead Auditor",
+              "Audit AI management systems against ISO 42001. 3 days live online, \u00a31,450, taught by practitioners with 25+ years in the field."),
+    "LEAD": ("Lead Disaster Recovery Manager",
+             "Design, run and test disaster recovery that holds up under pressure. Lead Disaster Recovery Manager, 3 days live online, \u00a31,450."),
+    "TRUS": ("TAISE | Trusted AI Safety Expert",
+             "The first credential for trustworthy AI. Trusted AI Safety Expert, 3 days live online, \u00a31,995, taught by practitioners with 25+ years in the field."),
+}
+
+# Category (subject) pages. Same rules.
+CATEGORY_META = {
+    "IAPP Training": ("IAPP Certification Training Courses",
+                      "Official IAPP courses taught live online: CIPP/E, CIPM, CIPT, AIGP and the combined DPO Ready week. Exam and IAPP membership included in the price."),
+    "Data Protection": ("Data Protection Training Courses",
+                        "Data protection and privacy training taught live online, from 1 day GDPR awareness through to full DPO certification. Classes capped at 15 delegates."),
+    "GDPR Training": ("GDPR Training Courses",
+                      "GDPR courses at every level: awareness for teams, foundation certificates and certified practitioner routes. Live online, capped at 15 delegates."),
+    "Compliance Training": ("Compliance Training Courses",
+                            "Certified courses for the people who own compliance: DPOs, auditors and privacy programme managers. Taught live online by working practitioners."),
+    "ISO Standards Training": ("ISO Standards Training Courses",
+                               "Certified ISO lead implementer, lead auditor and risk courses across 27001, 27701, 22301, 31000 and 42001. Taught live online, capped at 15."),
+    "Cybersecurity Courses": ("Cybersecurity Training Courses",
+                              "Certified cybersecurity courses from foundation level through to security manager and analyst certifications. Taught live online by practitioners."),
+    "IT Governance & Audit": ("IT Governance & Audit Courses",
+                              "Governance and audit certifications across privacy, AI and information security. Taught live online by auditors who still do the work."),
+    "Risk Management": ("Risk Management Training Courses",
+                        "Certified risk management courses built on ISO 31000, ISO 27005 and incident management standards. Live online, capped at 15 delegates."),
+    "Disaster Recovery & Business Continuity Training": ("Disaster Recovery & BC Training",
+                                                         "Business continuity and disaster recovery certifications built on ISO 22301 and ISO 22361. Taught live online, classes capped at 15 delegates."),
+    "Business Resilience Training": ("Business Resilience Training",
+                                     "Resilience certifications covering business continuity, crisis management and operational resilience. Taught live online by practitioners."),
+    "Business Analysis & Design": ("Business Analysis & Design Courses",
+                                   "Courses for analysts and designers working across security, assurance and AI implementation. Taught live online, capped at 15 delegates."),
+    "Artificial Intelligence Training": ("AI Training Courses",
+                                         "AI governance, safety and productivity courses including AIGP, TAISE and the ISO 42001 routes. Taught live online by practitioners, capped at 15."),
+    "BCS Training Courses": ("BCS AI Training Courses",
+                             "Official BCS artificial intelligence qualifications: the Essentials and Foundation certificates. Taught live online, classes capped at 15 delegates."),
+}
+
 def fetch_json(url):
     req = urllib.request.Request(url, headers=UA)
     with urllib.request.urlopen(req, timeout=60) as r:
@@ -533,9 +640,11 @@ def build_course_page(t, notes):
 
     price_fb = baked_price(t)
     nextdate_fallback = "Being scheduled"
-    meta_desc = (summary[:150] + "...") if len(summary) > 153 else summary
+    _m = META.get(code)
+    meta_desc = _m[1] if _m else (
+        (summary[:150] + "...") if len(summary) > 153 else summary)
 
-    page = HEAD.format(title=esc(name), meta_desc=esc(meta_desc))
+    page = HEAD.format(title=esc(_m[0] if _m else name), meta_desc=esc(meta_desc))
     page += HEADER.format(nav_courses='hover:text-[#0085B7]', nav_schedule='hover:text-[#0085B7]',
                           cta_href="#dates", cta_label="See dates &amp; book", jumpnav=jumpnav_course())
     page += f"""
@@ -646,7 +755,9 @@ def build_category_page(cat_name, slug, templates, notes):
         </div>
       </article>"""
     title = cat_name if "course" in cat_name.lower() or "training" in cat_name.lower() else cat_name + " courses"
-    page = HEAD.format(title=esc(title), meta_desc=esc(intro))
+    _cm = CATEGORY_META.get(cat_name)
+    page = HEAD.format(title=esc(_cm[0] if _cm else title),
+                       meta_desc=esc(_cm[1] if _cm else intro))
     page += HEADER.format(nav_courses='font-semibold text-[#0085B7]', nav_schedule='hover:text-[#0085B7]',
                           cta_href="/schedule/", cta_label="Course schedule", jumpnav="")
     page += f"""
