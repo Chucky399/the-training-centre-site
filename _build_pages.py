@@ -866,3 +866,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # Canonical / Open Graph / Course structured data. Run last so it sees the
+    # final titles and descriptions, and so a regen can never drop them.
+    import _seo_meta
+    _seo_meta.main()
