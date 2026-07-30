@@ -441,18 +441,22 @@ STICKY_CTA = """
 """
 
 def included_items(fm, notes):
+    """Items come as one-per-<p> (or <li>/<br>). Trailing '*' marks footnoted items;
+    a paragraph starting '*' is the footnote itself. Returns (items, footnote)."""
     raw = fm.get("What's Included?", "")
-    items = re.findall(r"<li[^>]*>(.*?)</li>", raw, re.S)
-    out = []
-    for it in items:
-        txt = plain_text(it)
+    chunks = re.findall(r"<li[^>]*>(.*?)</li>", raw, re.S)
+    if not chunks:
+        chunks = re.split(r"</p>|<br\s*/?>", raw)
+    items, footnote = [], ""
+    for c in chunks:
+        txt = plain_text(c)
         txt = strip_vat_sentences(txt, notes).strip()
-        if txt: out.append(txt)
-    if not out:
-        for line in plain_text(raw).split(". "):
-            line = strip_vat_sentences(line, notes).strip().rstrip(".")
-            if line: out.append(line)
-    return out[:7]
+        if not txt: continue
+        if txt.startswith("*"):
+            footnote = (footnote + " " + txt.lstrip("* ").strip()).strip()
+            continue
+        items.append(txt.rstrip("*").strip(" ."))
+    return items[:8], footnote
 
 def build_course_page(t, notes):
     code = t["Code"]
@@ -482,7 +486,7 @@ def build_course_page(t, notes):
             if cleaned and plain_text(raw):
                 detail_fields.append((fname, cleaned))
 
-    inc = included_items(fm, notes)
+    inc, inc_note = included_items(fm, notes)
     inc_html = "".join(
         f'<li class="flex items-start gap-3"><span class="text-[#13B4EA] mt-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg></span><span>{esc(i)}</span></li>'
         for i in inc)
@@ -490,7 +494,7 @@ def build_course_page(t, notes):
   <aside class="bg-[#1E2B34] rounded-[8px] p-6 sm:p-7">
     <h2 class="font-display font-bold text-white text-lg">Included in your fee</h2>
     <ul class="mt-4 space-y-3 text-[#C8D2D9]">{inc_html}</ul>
-    <p class="text-sm text-[#8FA0AB] mt-5 border-t border-white/10 pt-4">0% interest payment plans available on all courses. Pay by card, invoice with a PO reference, or direct debit.</p>
+    {("<p class=\"text-sm text-[#8FA0AB] mt-4\">* " + esc(inc_note) + "</p>") if inc_note else ""}<p class="text-sm text-[#8FA0AB] mt-5 border-t border-white/10 pt-4">0% interest payment plans available on all courses. Pay by card, invoice with a PO reference, or direct debit.</p>
   </aside>""" if inc else ""
 
     details_html = "".join(f"""
