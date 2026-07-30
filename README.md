@@ -27,6 +27,26 @@ The schedule maintains itself. There is no monthly content task.
    with dates, price and booking — no code change. Give it a proper home in a curated
    section later if it earns one.
 
+## Generated pages: `_build_pages.py`
+
+The 30 course pages and 12 category pages under `/courses/` (plus `/courses/index.html`)
+are GENERATED from the Arlo Pub API - every word of course content is John's own
+(Description, About This Course, Who Should Attend?, Prerequisites, What's Included?,
+Assessment, Accreditation, Provided by, Our Guarantee). Regenerate when John materially
+changes course content in Arlo, or when he adds a brand-new course that deserves its own
+page (add its code to SLUGS and, if needed, CATEGORIES):
+
+```
+python _build_pages.py
+```
+
+Hand-built pages are never touched by the generator: home, schedule, about, contact,
+insights, thank-you, trainers, in-house-training, cipp-e (+outline/faq), cdpo, aigp,
+taise, iso-standards. VAT-mentioning sentences are stripped from imported copy
+(VAT display is an open client decision); the "IS0" Arlo typo is corrected display-side
+only. `/trainers/` bios were lifted verbatim from his old presenter pages 30 Jul 2026
+(source data: see the session scratchpad ttc_presenter_bios.json / re-scrape if stale).
+
 ### The ONE recurring job: `_regen_snapshot.py`
 
 `assets/schedule-data.js` is the baked fallback used for the instant first paint and

@@ -201,6 +201,15 @@ def duration_label(t):
     d = d[0].upper() + d[1:]
     return re.sub(r"\bdays\b", "days", d)
 
+
+def baked_price(t):
+    offers = t.get("BestAdvertisedOffers") or []
+    if not offers: return ""
+    amt = (offers[0].get("OfferAmount") or {}).get("AmountTaxInclusive")
+    if amt is None: return ""
+    whole = round(amt) == amt
+    return "£" + format(amt, ",.0f" if whole else ",.2f")
+
 VAT_RE = re.compile(r"[^.!?]*\bVAT\b[^.!?]*[.!?]?", re.I)
 
 def strip_vat_sentences(txt, notes_sink):
@@ -493,6 +502,8 @@ def build_course_page(t, notes):
         <div class="px-6 pb-5 -mt-1">{content}</div>
       </details>""" for fname, content in detail_fields)
 
+    price_fb = baked_price(t)
+    nextdate_fallback = "Being scheduled"
     meta_desc = (summary[:150] + "...") if len(summary) > 153 else summary
 
     page = HEAD.format(title=esc(name), meta_desc=esc(meta_desc))
@@ -510,9 +521,9 @@ def build_course_page(t, notes):
     <p class="text-[#47545D] text-lg leading-relaxed mt-5 max-w-[54ch]">{esc(summary)}</p>
     <dl class="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-4 mt-8 tnum">
       <div><dt class="text-xs font-semibold uppercase tracking-wide text-[#47545D]">Length</dt><dd class="font-display font-bold text-[#1E2B34] mt-1">{esc(dur)}</dd></div>
-      <div><dt class="text-xs font-semibold uppercase tracking-wide text-[#47545D]">Next date</dt><dd class="font-display font-bold text-[#1E2B34] mt-1" data-ttc-nextdate="{esc(code)}">See below</dd></div>
+      <div><dt class="text-xs font-semibold uppercase tracking-wide text-[#47545D]">Next date</dt><dd class="font-display font-bold text-[#1E2B34] mt-1" data-ttc-nextdate="{esc(code)}">{esc(nextdate_fallback)}</dd></div>
       <div><dt class="text-xs font-semibold uppercase tracking-wide text-[#47545D]">Format</dt><dd class="font-display font-bold text-[#1E2B34] mt-1">Live online</dd></div>
-      <div><dt class="text-xs font-semibold uppercase tracking-wide text-[#47545D]">Fee</dt><dd class="font-display font-bold text-[#1E2B34] mt-1" data-ttc-price="{esc(code)}"></dd></div>
+      <div><dt class="text-xs font-semibold uppercase tracking-wide text-[#47545D]">Fee</dt><dd class="font-display font-bold text-[#1E2B34] mt-1" data-ttc-price="{esc(code)}">{esc(price_fb)}</dd></div>
     </dl>
     <div class="flex flex-wrap items-center gap-4 mt-8">
       <a href="#dates" class="btn-solid px-7 py-3.5">See dates &amp; book</a>
@@ -594,10 +605,10 @@ def build_category_page(cat_name, slug, templates, notes):
           <div class="flex-1 min-w-[16rem]">
             <h2 class="font-display font-bold text-xl text-[#1E2B34]"><a href="{url}" class="hover:text-[#0085B7]">{esc(name)}</a></h2>
             <p class="text-[#47545D] leading-relaxed mt-2">{esc(summary)}</p>
-            <p class="text-sm text-[#47545D] mt-3 tnum">{esc(dur)} &middot; live online &middot; <span data-ttc-nextdate="{esc(code)}">see schedule</span></p>
+            <p class="text-sm text-[#47545D] mt-3 tnum">{esc(dur)} &middot; live online &middot; <span data-ttc-nextdate="{esc(code)}">dates being scheduled</span></p>
           </div>
           <div class="flex flex-col items-start sm:items-end gap-3 sm:text-right">
-            <p class="tnum font-display font-extrabold text-[#0085B7] text-xl" data-ttc-price="{esc(code)}"></p>
+            <p class="tnum font-display font-extrabold text-[#0085B7] text-xl" data-ttc-price="{esc(code)}">{esc(baked_price(t))}</p>
             <div class="flex gap-3">
               <a href="{url}" class="btn-solid text-sm px-5 py-2.5 whitespace-nowrap">Course details</a>
               <a href="{url}#dates" class="btn-light text-sm px-5 py-2.5 whitespace-nowrap">Dates</a>
@@ -653,7 +664,7 @@ def build_courses_index(templates, cat_counts):
         az += f"""
       <li class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3">
         <a href="{course_url(t["Code"])}" class="font-semibold text-[#1E2B34] hover:text-[#0085B7]">{esc(clean_name(t["Name"]))}</a>
-        <span class="text-sm text-[#47545D] tnum">{esc(duration_label(t))} &middot; <span data-ttc-nextdate="{esc(t["Code"])}">see schedule</span></span>
+        <span class="text-sm text-[#47545D] tnum">{esc(duration_label(t))} &middot; <span data-ttc-nextdate="{esc(t["Code"])}">dates being scheduled</span></span>
       </li>"""
     page = HEAD.format(title="All courses", meta_desc="Every certified course we run: privacy, data protection, GDPR, AI, cybersecurity, risk and ISO standards. All taught live online.")
     page += HEADER.format(nav_courses='font-semibold text-[#0085B7]', nav_schedule='hover:text-[#0085B7]',
