@@ -208,10 +208,29 @@ def duration_label(t):
     return re.sub(r"\bdays\b", "days", d)
 
 
+# Templates where changing to the ex-VAT figure would CHANGE the price John advertises
+# rather than just restate it, so we hold his current number until he confirms.
+#
+# Only 5 of the catalogue's templates have a VAT rate set in Arlo at all. On four of them
+# the ex-VAT figure is the round, advertised one (AIPR/AIST/AIAG GBP1,795, BCSF GBP1,095) and
+# the tax-inclusive field was what made those pages read GBP2,154 / GBP1,314. CYBE5 is entered
+# the other way round: GBP395 inclusive, GBP329.17 exclusive. That looks like the price was typed
+# into the inclusive box by mistake, but guessing is not ours to do - GBP395 is what he
+# advertises today, so GBP395 is what we keep showing until he says otherwise.
+# Remove the entry once John confirms. Raised with him 30 Jul 2026.
+PRICE_HOLD = {"CYBE5": "£395"}
+
+
 def baked_price(t):
+    code = t.get("Code")
+    if code in PRICE_HOLD:
+        return PRICE_HOLD[code]
     offers = t.get("BestAdvertisedOffers") or []
     if not offers: return ""
-    amt = (offers[0].get("OfferAmount") or {}).get("AmountTaxInclusive")
+    # Ex-VAT at John's instruction 30 Jul 2026: competitors advertise the bare number and a
+    # delegate comparing providers should not have to do the sum. His own T&Cs already say
+    # "All Prices exclude VAT".
+    amt = (offers[0].get("OfferAmount") or {}).get("AmountTaxExclusive")
     if amt is None: return ""
     whole = round(amt) == amt
     return "£" + format(amt, ",.0f" if whole else ",.2f")

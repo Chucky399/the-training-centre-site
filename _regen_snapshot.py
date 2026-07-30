@@ -60,7 +60,9 @@ for ev in items:
         "name": ev.get("Name", ""),
         "start": ev.get("StartDateTime", ""),
         "end": ev.get("EndDateTime", ""),
-        "price": offer.get("AmountTaxInclusive"),
+        # Ex-VAT at John's instruction 30 Jul 2026 (competitors advertise the bare number),
+        # and the only consistent option: Arlo has a VAT rate on the 3 AI templates only.
+        "price": offer.get("AmountTaxExclusive"),
         "book": register or fallback,
         "full": ev.get("IsFull", False),
     })

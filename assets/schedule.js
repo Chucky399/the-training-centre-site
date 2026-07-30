@@ -214,6 +214,15 @@
     return null;                                              // unknown host -> refuse
   }
 
+  /* Same display-side name fixes the page generator applies (_build_pages.py clean_name):
+     the "IS0 27001" typo with a zero, stray double spaces, trailing whitespace. Without
+     this the generated course pages read "ISO" while the live schedule rendering the same
+     course read "IS0". John said on 30 Jul he would correct these in Arlo; this stays
+     regardless, so a future typo cannot reach the page. */
+  function cleanName(n) {
+    return String(n || "").replace(/IS0 /g, "ISO ").replace(/\s{2,}/g, " ").trim();
+  }
+
   function slim(items) {
     return items.map(function (ev) {
       var offer = ((ev.AdvertisedOffers || [])[0] || {}).OfferAmount || {};
@@ -225,10 +234,16 @@
       return {
         id: ev.EventID,
         code: ev.TemplateCode || "",
-        name: ev.Name || "",
+        name: cleanName(ev.Name),
         start: ev.StartDateTime || "",
         end: ev.EndDateTime || "",
-        price: offer.AmountTaxInclusive != null ? offer.AmountTaxInclusive : null,
+        // Ex-VAT, at John's instruction 30 Jul 2026: competitors advertise the bare
+        // number, and a delegate comparing providers should not have to do the sum.
+        // It is also the only consistent option - Arlo has a VAT rate set on the three
+        // AI templates (AIPR/AIST/AIAG) and on nothing else, so the tax-inclusive field
+        // made those three look 20% dearer than the rest of the catalogue.
+        // His own T&Cs already say "All Prices exclude VAT".
+        price: offer.AmountTaxExclusive != null ? offer.AmountTaxExclusive : null,
         book: register || fallback,
         full: !!ev.IsFull
       };
