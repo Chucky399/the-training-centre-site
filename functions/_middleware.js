@@ -23,8 +23,13 @@ const ARLO_PREFIXES = [
   "/eu/register", "/eu/checkout", "/api",
 ];
 
-/* Old URL -> page on the new site. 112 entries. */
+/* Old URL -> page on the new site. 112 entries + the two bare listing URLs below. */
 const EXACT = {
+  // Bare listing pages (no trailing slash) are real live URLs on the old site
+  // (302 -> /w/uk/...). Without these they fell through to the "/uk/" catch-all
+  // and landed on the homepage instead of the equivalent listing. (31 Jul review)
+  "/uk/presenters": "/trainers/",
+  "/uk/venues": "/schedule/",
   "/uk/courses/108-lead-disaster-recovery-manager": "/courses/lead-disaster-recovery-manager/",
   "/uk/courses/11-european-data-protection-privacy-programme-management-dpo-ready": "/courses/dpo-ready/",
   "/uk/courses/111-certified-iso-27035-lead-incident-manager": "/courses/iso-27035-lead-incident-manager/",
@@ -175,7 +180,9 @@ export async function onRequest(context) {
 
   for (const [prefix, target] of PREFIXES) {
     if (path.startsWith(prefix)) {
-      return Response.redirect(url.origin + target, 301);
+      // Keep the query string, exactly as the EXACT and ARLO_PREFIXES branches do -
+      // dropping it here was silently stripping gclid/UTM params off legacy paid links.
+      return Response.redirect(url.origin + target + url.search, 301);
     }
   }
 
