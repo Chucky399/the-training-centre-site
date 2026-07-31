@@ -27,15 +27,8 @@
 
   var API_BASE = ARLO_HOST + "/api/2012-02-01/pub/resources/eventsearch/";
   var API_FIELDS = "EventID,Name,StartDateTime,EndDateTime,ViewUri,TemplateCode,AdvertisedOffers,IsFull,RegistrationInfo";
-  /* Prices we deliberately hold, mirroring PRICE_HOLD in _build_pages.py.
-     Arlo has CYBE5 entered the other way round to every other course (GBP395
-     inclusive, GBP329.17 exclusive), so taking the exclusive figure here would
-     CHANGE a price John advertises rather than restate it. Without this the
-     live re-render would silently overwrite the held price the moment the
-     course gets a scheduled date. Remove once John confirms. */
-  var PRICE_HOLD = { "CYBE5": 395 };
 
-  var CACHE_KEY = "ttc-schedule-v3"; // v3: book links moved off the arlo.co host (empty-cart bug) - new key so no browser serves cached broken links
+  var CACHE_KEY = "ttc-schedule-v4"; // v4: prices switched to VAT-inclusive (John, 31 Jul) - new key so no browser serves cached ex-VAT prices
   var CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 
   var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -252,15 +245,12 @@
         name: cleanName(ev.Name),
         start: ev.StartDateTime || "",
         end: ev.EndDateTime || "",
-        // Ex-VAT, at John's instruction 30 Jul 2026: competitors advertise the bare
-        // number, and a delegate comparing providers should not have to do the sum.
-        // It is also the only consistent option - Arlo has a VAT rate set on the three
-        // AI templates (AIPR/AIST/AIAG) and on nothing else, so the tax-inclusive field
-        // made those three look 20% dearer than the rest of the catalogue.
-        // His own T&Cs already say "All Prices exclude VAT".
-        price: Object.prototype.hasOwnProperty.call(PRICE_HOLD, ev.TemplateCode)
-          ? PRICE_HOLD[ev.TemplateCode]
-          : (offer.AmountTaxExclusive != null ? offer.AmountTaxExclusive : null),
+        // VAT-INCLUSIVE, at John's instruction 31 Jul 2026 ("All prices should show
+        // with VAT included. I have amended the T&C's to reflect this."). Supersedes
+        // his 30 Jul ex-VAT instruction. Templates with no VAT rate in Arlo have
+        // inclusive == exclusive; the 5 with a rate display 20% higher. CYBE5 is
+        // entered inclusive (395) so the old PRICE_HOLD is no longer needed.
+        price: offer.AmountTaxInclusive != null ? offer.AmountTaxInclusive : null,
         book: register || fallback,
         full: !!ev.IsFull
       };

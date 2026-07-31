@@ -80,19 +80,19 @@ CATEGORY_INTROS = {  # 1 factual line each; counts are injected from live data
 # or the About page stat block; nothing is invented.
 META = {
     "AIAG": ("AI Agents Foundation & Practitioner",
-             "Build and govern AI agents that run real business workflows. 4 days live online, \u00a31,795, taught by practitioners with 25+ years in the field."),
+             "Build and govern AI agents that run real business workflows. 4 days live online, \u00a32,154, taught by practitioners with 25+ years in the field."),
     "AIGO": ("AIGP Certification Course",
              "The IAPP's AI Governance Professional certification, taught on official materials. 2 days live online, \u00a31,550, exam and IAPP membership included."),
     "AIPR": ("AI Productivity Training Course",
-             "Put AI to work across your team's day-to-day: prompting, content, research and analysis. 4 days live online, \u00a31,795, capped at 15 delegates."),
+             "Put AI to work across your team's day-to-day: prompting, content, research and analysis. 4 days live online, \u00a32,154, capped at 15 delegates."),
     "AIST": ("AI Strategy & Governance Course",
-             "AI strategy and governance in one programme: ROI mapping, global regulation, IP and data risk, procurement. 4 days live online, \u00a31,795."),
+             "AI strategy and governance in one programme: ROI mapping, global regulation, IP and data risk, procurement. 4 days live online, \u00a32,154."),
     "ARTI1": ("AI for Project Managers Course",
               "AI applied to real project delivery: core concepts, predictive analytics and smart resource allocation. 1 day live online plus support, \u00a31,395."),
     "BCSE": ("BCS Essentials in AI Certificate",
              "The official BCS Essentials Certificate in Artificial Intelligence: key AI terminology, tools, and what they mean for society. 1 day live online, \u00a3495."),
     "BCSF": ("BCS Foundation Certificate in AI",
-             "The official BCS Foundation Certificate in Artificial Intelligence, the step up from Essentials. 3 days live online, \u00a31,095, capped at 15 delegates."),
+             "The official BCS Foundation Certificate in Artificial Intelligence, the step up from Essentials. 3 days live online, \u00a31,314, capped at 15 delegates."),
     "CERT13": ("CDPO Certification Course",
                "Three days covering the whole DPO role, taught by working DPOs. Certified Data Protection Officer training, live online, \u00a31,450, exam included."),
     "CERT14": ("Certified GDPR Foundation",
@@ -315,29 +315,15 @@ def duration_label(t):
     return re.sub(r"\bdays\b", "days", d)
 
 
-# Templates where changing to the ex-VAT figure would CHANGE the price John advertises
-# rather than just restate it, so we hold his current number until he confirms.
-#
-# Only 5 of the catalogue's templates have a VAT rate set in Arlo at all. On four of them
-# the ex-VAT figure is the round, advertised one (AIPR/AIST/AIAG GBP1,795, BCSF GBP1,095) and
-# the tax-inclusive field was what made those pages read GBP2,154 / GBP1,314. CYBE5 is entered
-# the other way round: GBP395 inclusive, GBP329.17 exclusive. That looks like the price was typed
-# into the inclusive box by mistake, but guessing is not ours to do - GBP395 is what he
-# advertises today, so GBP395 is what we keep showing until he says otherwise.
-# Remove the entry once John confirms. Raised with him 30 Jul 2026.
-PRICE_HOLD = {"CYBE5": "£395"}
-
-
 def baked_price(t):
-    code = t.get("Code")
-    if code in PRICE_HOLD:
-        return PRICE_HOLD[code]
     offers = t.get("BestAdvertisedOffers") or []
     if not offers: return ""
-    # Ex-VAT at John's instruction 30 Jul 2026: competitors advertise the bare number and a
-    # delegate comparing providers should not have to do the sum. His own T&Cs already say
-    # "All Prices exclude VAT".
-    amt = (offers[0].get("OfferAmount") or {}).get("AmountTaxExclusive")
+    # VAT-INCLUSIVE at John's instruction 31 Jul 2026 ("All prices should show with VAT
+    # included. I have amended the T&C's to reflect this."). This supersedes his 30 Jul
+    # ex-VAT instruction. On the 5 templates with a VAT rate in Arlo the inclusive figure
+    # is 20% higher (AIPR/AIST/AIAG £2,154, BCSF £1,314); the rest have no VAT rate set,
+    # so inclusive == exclusive. CYBE5 is entered inclusive (£395) so no hold is needed.
+    amt = (offers[0].get("OfferAmount") or {}).get("AmountTaxInclusive")
     if amt is None: return ""
     whole = round(amt) == amt
     return "£" + format(amt, ",.0f" if whole else ",.2f")
@@ -442,11 +428,11 @@ FOOTER = """
     <div>
       <p class="text-white font-display font-bold text-base">Courses</p>
       <ul class="mt-3 space-y-2">
-        <li><a href="/courses/iapp-training/" class="hover:text-white">IAPP certification</a></li>
-        <li><a href="/courses/data-protection/" class="hover:text-white">Data protection &amp; GDPR</a></li>
-        <li><a href="/courses/ai-training/" class="hover:text-white">AI safety &amp; governance</a></li>
-        <li><a href="/courses/iso-standards/" class="hover:text-white">ISO standards</a></li>
-        <li><a href="/courses/cybersecurity/" class="hover:text-white">Cybersecurity &amp; resilience</a></li>
+        <li><a href="/courses/iapp-training/" class="hover:text-white">IAPP Training</a></li>
+        <li><a href="/courses/data-protection/" class="hover:text-white">Data Protection</a></li>
+        <li><a href="/courses/ai-training/" class="hover:text-white">Artificial Intelligence Training</a></li>
+        <li><a href="/courses/iso-standards/" class="hover:text-white">Certified ISO Standards Training</a></li>
+        <li><a href="/courses/cybersecurity/" class="hover:text-white">Cybersecurity Courses</a></li>
       </ul>
     </div>
     <div>
@@ -557,7 +543,7 @@ def jumpnav_course():
     return """<nav class="jumpnav border-t border-[#323F48]/10 bg-white overflow-x-auto whitespace-nowrap px-5 hidden md:block">
     <div class="max-w-6xl mx-auto flex gap-7 text-sm py-2.5 text-[#47545D]">
       <a href="#dates" class="hover:text-[#0085B7]">Dates &amp; times</a>
-      <a href="#about" class="hover:text-[#0085B7]">About the course</a>
+      <a href="#about" class="hover:text-[#0085B7]">What it covers</a>
       <a href="#who" class="hover:text-[#0085B7]">Who it&rsquo;s for</a>
       <a href="#details" class="hover:text-[#0085B7]">Course details</a>
       <a href="#enquire" class="hover:text-[#0085B7]">Enquire</a>
@@ -684,7 +670,7 @@ def build_course_page(t, notes):
 
 <section id="about" class="scroll-mt-28 bg-white border-y border-[#323F48]/10">
   <div class="max-w-3xl mx-auto px-5 py-16">
-    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]">About this course</h2>
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-[#1E2B34]">What the course covers</h2>
     <div class="mt-2">{about_html or '<p ' + BLOCK_P + '>' + esc(summary) + '</p>'}</div>
   </div>
 </section>
