@@ -28,21 +28,29 @@ for _ in range(10):
 
 ALIASES = ("https://www.the-training-centre.com", "https://the-training-centre.com", ARLO_HOST)
 
+# The host booking links must use = wherever Arlo's checkout actually answers.
+# NOT ARLO_HOST: while the custom domain is active, Arlo 302s /uk/register hits on
+# its own arlo.co host across to www.../uk/checkout and the booking session does not
+# survive the cross-domain hop - the delegate lands on an EMPTY cart (verified
+# 31 Jul 2026; John hit exactly this reviewing the dev site). Keep in sync with
+# BOOK_HOST in assets/schedule.js. At domain cutover this changes with the DNS
+# decision (Arlo's branded checkout subdomain, or Cloudflare proxying /uk/* to Arlo).
+BOOK_HOST = "https://www.the-training-centre.com"
 
-def to_arlo(u):
-    """Point a booking/event link at Arlo whatever host the feed gave us.
 
-    The feed returns absolute URLs on www.the-training-centre.com. Once www serves the
-    new site those would land on the wrong place, so rewrite the host. Anything on an
-    unknown host is dropped rather than rendered as a clickable Book button.
+def to_booking(u):
+    """Point a booking/event link at BOOK_HOST whatever host the feed gave us.
+
+    Anything on an unknown host is dropped rather than rendered as a clickable
+    Book button (guard against a poisoned feed).
     """
     if not u or not isinstance(u, str):
         return None
     if u.startswith("/"):
-        return ARLO_HOST + u
+        return BOOK_HOST + u
     for a in ALIASES:
         if u.startswith(a + "/"):
-            return ARLO_HOST + u[len(a):]
+            return BOOK_HOST + u[len(a):]
     return None
 
 
@@ -52,8 +60,8 @@ for ev in items:
     view = ev.get("ViewUri", "")
     # Book straight into Arlo registration (the event page's own Book Now target);
     # fall back to the per-date event page if a register link is ever missing.
-    register = to_arlo((ev.get("RegistrationInfo") or {}).get("RegisterUri"))
-    fallback = to_arlo(view.replace("/uk/courses/", "/w/uk/courses/") + "/" + str(ev["EventID"]))
+    register = to_booking((ev.get("RegistrationInfo") or {}).get("RegisterUri"))
+    fallback = to_booking(view.replace("/uk/courses/", "/w/uk/courses/") + "/" + str(ev["EventID"]))
     slim.append({
         "id": ev["EventID"],
         "code": ev.get("TemplateCode", ""),

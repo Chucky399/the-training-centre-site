@@ -8,14 +8,21 @@
 
   /* Arlo's OWN hostname - not www.the-training-centre.com.
      www.the-training-centre.com is currently a CNAME to this host, which is why the
-     old site, the booking checkout and this API all answer on it today. The moment
-     www is repointed at Cloudflare Pages for the new site, anything addressed to www
-     would hit the new site instead: the schedule feed would stop refreshing and every
-     Book button would 404. Addressing Arlo directly keeps booking and the live feed
-     working straight through the DNS cutover.
-     If John later asks Arlo for a branded checkout domain (e.g. book.the-training-centre.com
-     CNAME'd to Arlo), this one line is the only change needed. */
+     old site, the booking checkout and this API all answer on it today.
+     The API is fine on this host. BOOKING IS NOT: while the custom domain is active,
+     Arlo 302s any /uk/register hit on this host across to www.../uk/checkout, and the
+     booking session does not survive the cross-domain hop - the delegate lands on an
+     EMPTY cart (verified 31 Jul 2026; John hit exactly this reviewing the dev site).
+     So Book links must stay on BOOK_HOST below, and the API stays here. */
   var ARLO_HOST = "https://marketstreetconsultantsltdevents.arlo.co";
+
+  /* The host booking links must use = wherever Arlo's checkout actually answers.
+     Today that is www (www still CNAMEs to Arlo). AT DOMAIN CUTOVER THIS MUST CHANGE
+     with the DNS decision: either Arlo moves its custom domain to e.g.
+     book.the-training-centre.com (set that here), or Cloudflare proxies /uk/register,
+     /uk/checkout + /api through to Arlo on www (leave as-is). Pointing this at
+     ARLO_HOST does NOT work - see the empty-cart note above. */
+  var BOOK_HOST = "https://www.the-training-centre.com";
   var ARLO_ALIASES = ["https://www.the-training-centre.com", "https://the-training-centre.com", ARLO_HOST];
 
   var API_BASE = ARLO_HOST + "/api/2012-02-01/pub/resources/eventsearch/";
@@ -28,7 +35,7 @@
      course gets a scheduled date. Remove once John confirms. */
   var PRICE_HOLD = { "CYBE5": 395 };
 
-  var CACHE_KEY = "ttc-schedule-v2";
+  var CACHE_KEY = "ttc-schedule-v3"; // v3: book links moved off the arlo.co host (empty-cart bug) - new key so no browser serves cached broken links
   var CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 
   var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -205,18 +212,18 @@
     return null;
   }
 
-  /* Send every booking/event link to Arlo, whatever host the feed hands us.
-     Arlo's feed returns absolute URLs on www.the-training-centre.com; once www serves
-     the new site those would land on the wrong place, so we rewrite the host here.
+  /* Send every booking/event link to BOOK_HOST, whatever host the feed hands us.
+     Booking must run on the custom domain while it is active - Arlo bounces its own
+     arlo.co host to www and loses the cart on the way (empty-cart bug, 31 Jul 2026).
      Anything that is not a plain http(s) URL on a known Arlo alias is dropped, which
      keeps the original guard against a poisoned feed rendering e.g. a javascript:
      URI as a clickable Book button. */
-  function toArlo(u) {
+  function toBooking(u) {
     if (!u || typeof u !== "string") return null;
-    if (u.charAt(0) === "/") return ARLO_HOST + u;           // relative -> Arlo
+    if (u.charAt(0) === "/") return BOOK_HOST + u;           // relative -> booking host
     for (var i = 0; i < ARLO_ALIASES.length; i++) {
       if (u.indexOf(ARLO_ALIASES[i] + "/") === 0) {
-        return ARLO_HOST + u.slice(ARLO_ALIASES[i].length);
+        return BOOK_HOST + u.slice(ARLO_ALIASES[i].length);
       }
     }
     return null;                                              // unknown host -> refuse
@@ -237,8 +244,8 @@
       var view = ev.ViewUri || "";
       // Book straight into Arlo registration (the event page's own Book Now target);
       // fall back to the per-date event page if a register link is ever missing.
-      var register = toArlo((ev.RegistrationInfo || {}).RegisterUri);
-      var fallback = toArlo(view.replace("/uk/courses/", "/w/uk/courses/") + "/" + ev.EventID);
+      var register = toBooking((ev.RegistrationInfo || {}).RegisterUri);
+      var fallback = toBooking(view.replace("/uk/courses/", "/w/uk/courses/") + "/" + ev.EventID);
       return {
         id: ev.EventID,
         code: ev.TemplateCode || "",
