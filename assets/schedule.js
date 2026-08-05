@@ -159,6 +159,14 @@
       if (evs.length) el.textContent = evs[0].lengthLabel + " · " + evs[0].timeLabel + " · " + placeSummary(evs);
     });
 
+    // Format label: <dd data-ttc-place="CERT7"> -> "Live online" / "Live online or in London"
+    document.querySelectorAll("[data-ttc-place]").forEach(function (el) {
+      var evs = byCode[el.getAttribute("data-ttc-place")] || [];
+      if (!evs.length) return;
+      var p = placeSummary(evs);
+      el.textContent = p.charAt(0).toUpperCase() + p.slice(1);
+    });
+
     // Catch-all: any course template in the feed that has no table on this page
     // renders automatically, so new courses published in Arlo appear without a code change.
     document.querySelectorAll("[data-ttc-rest]").forEach(function (el) {

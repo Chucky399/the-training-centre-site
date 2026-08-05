@@ -95,6 +95,22 @@ def course_schema(f, title, desc, url):
             "startDate": start,
             "endDate": end,
         }
+        # In-person runs (venue carried in the snapshot from Arlo's Location data)
+        # are Onsite with a real place, not Online.
+        v = e.get("venue")
+        if v:
+            inst["courseMode"] = "Onsite"
+            inst["location"] = {
+                "@type": "Place",
+                "name": v.get("name") or v.get("city") or "",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": v.get("street") or "",
+                    "addressLocality": v.get("city") or "",
+                    "postalCode": v.get("postcode") or "",
+                    "addressCountry": "GB",
+                },
+            }
         # Real run length from the dates. Never hard-code this: a wrong
         # courseWorkload is worse than none, because it contradicts the page.
         try:
