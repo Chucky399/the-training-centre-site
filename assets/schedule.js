@@ -29,7 +29,9 @@
   var API_FIELDS = "EventID,Name,StartDateTime,EndDateTime,ViewUri,TemplateCode,AdvertisedOffers,IsFull,RegistrationInfo,Location";
 
   var CACHE_KEY = "ttc-schedule-v5"; // v5: venue added per event (John, 4 Aug: London classroom dates must not present as live online) - new key so no browser serves cached venue-less events
-  var CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+  var CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes (was 1 hour; shortened 5 Aug 2026 so
+  // John's Arlo edits appear quickly - he adds dates then checks the site. Still enough
+  // of a guard that a browsing session never hammers the API.
 
   var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
