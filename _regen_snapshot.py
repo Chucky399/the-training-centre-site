@@ -62,6 +62,19 @@ for ev in items:
     # fall back to the per-date event page if a register link is ever missing.
     register = to_booking((ev.get("RegistrationInfo") or {}).get("RegisterUri"))
     fallback = to_booking(view.replace("/uk/courses/", "/w/uk/courses/") + "/" + str(ev["EventID"]))
+    # In-person venue straight from Arlo's scheduling data (John, 4 Aug 2026: London
+    # classroom dates must not present as live online). IsOnline events carry no venue.
+    loc = ev.get("Location") or {}
+    venue = None
+    if loc and not loc.get("IsOnline", False) and (
+        loc.get("VenueName") or loc.get("City") or (loc.get("Name") and loc.get("Name") != "Online")
+    ):
+        venue = {
+            "name": loc.get("VenueName") or loc.get("Name") or "",
+            "street": loc.get("StreetLine1") or "",
+            "city": loc.get("City") or loc.get("Name") or "",
+            "postcode": loc.get("PostCode") or "",
+        }
     slim.append({
         "id": ev["EventID"],
         "code": ev.get("TemplateCode", ""),
@@ -74,6 +87,7 @@ for ev in items:
         "price": offer.get("AmountTaxInclusive"),
         "book": register or fallback,
         "full": ev.get("IsFull", False),
+        "venue": venue,
     })
 slim.sort(key=lambda e: e["start"])
 

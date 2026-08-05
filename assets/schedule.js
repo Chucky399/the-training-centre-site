@@ -26,9 +26,9 @@
   var ARLO_ALIASES = ["https://www.the-training-centre.com", "https://the-training-centre.com", ARLO_HOST];
 
   var API_BASE = ARLO_HOST + "/api/2012-02-01/pub/resources/eventsearch/";
-  var API_FIELDS = "EventID,Name,StartDateTime,EndDateTime,ViewUri,TemplateCode,AdvertisedOffers,IsFull,RegistrationInfo";
+  var API_FIELDS = "EventID,Name,StartDateTime,EndDateTime,ViewUri,TemplateCode,AdvertisedOffers,IsFull,RegistrationInfo,Location";
 
-  var CACHE_KEY = "ttc-schedule-v4"; // v4: prices switched to VAT-inclusive (John, 31 Jul) - new key so no browser serves cached ex-VAT prices
+  var CACHE_KEY = "ttc-schedule-v5"; // v5: venue added per event (John, 4 Aug: London classroom dates must not present as live online) - new key so no browser serves cached venue-less events
   var CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 
   var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -69,7 +69,26 @@
     ev.timeLabel = fmtTime(s) + "–" + fmtTime(e) + " UK";
     ev.lengthLabel = days === 1 ? "1 day" : days + " full days";
     ev.priceLabel = fmtPrice(ev.price);
+    // Venue labels. Online events have no venue; in-person ones show the full venue
+    // details on their date row and just the city in compact contexts.
+    var v = ev.venue;
+    ev.placeRow = v
+      ? [v.name, v.street, ((v.city || "") + (v.postcode ? " " + v.postcode : "")).trim()].filter(Boolean).join(", ")
+      : "live online";
+    ev.placeShort = v ? (v.city || v.name) : "live online";
     return ev;
+  }
+
+  // "live online" / "live online or in London" / "in London" for a course's date list.
+  function placeSummary(evs) {
+    var cities = [];
+    var online = false;
+    evs.forEach(function (ev) {
+      if (!ev.venue) { online = true; }
+      else if (cities.indexOf(ev.placeShort) < 0) cities.push(ev.placeShort);
+    });
+    if (!cities.length) return "live online";
+    return (online ? "live online or in " : "in ") + cities.join(" / ");
   }
 
   function upcoming(events) {
@@ -93,8 +112,8 @@
           '<p class="font-display font-extrabold text-[#1E2B34] leading-none text-sm">' + esc(ev.tileTop) + '</p>' +
           '<p class="text-[11px] font-semibold uppercase tracking-wide text-[#47545D] mt-1">' + esc(ev.tileMonth) + '</p></div>' +
         '<div class="min-w-0">' +
-          (showName ? '<p class="font-semibold text-[#1E2B34]">' + esc(ev.name) + '</p><p class="text-sm text-[#47545D]">' + esc(ev.dayLabel) + ' · ' + esc(ev.timeLabel) + '</p>'
-                    : '<p class="font-semibold text-[#1E2B34]">' + esc(ev.dayLabel) + '</p><p class="text-sm text-[#47545D]">' + esc(ev.timeLabel) + ' · live online</p>') +
+          (showName ? '<p class="font-semibold text-[#1E2B34]">' + esc(ev.name) + '</p><p class="text-sm text-[#47545D]">' + esc(ev.dayLabel) + ' · ' + esc(ev.timeLabel) + ' · ' + esc(ev.placeRow) + '</p>'
+                    : '<p class="font-semibold text-[#1E2B34]">' + esc(ev.dayLabel) + '</p><p class="text-sm text-[#47545D]">' + esc(ev.timeLabel) + ' · ' + esc(ev.placeRow) + '</p>') +
         '</div></div>' +
       (ev.priceLabel ? '<p class="font-display font-bold text-[#1E2B34]">' + esc(ev.priceLabel) + '</p>' : '') +
       (ev.full
@@ -111,7 +130,7 @@
         '<p class="text-[10px] font-semibold uppercase tracking-wide text-[#47545D] mt-1">' + esc(ev.tileMonth) + '</p></div>' +
       '<div class="min-w-0 flex-1">' +
         '<p class="font-semibold text-[#1E2B34] text-sm leading-snug group-hover:text-[#0085B7]">' + esc(ev.name) + '</p>' +
-        '<p class="text-xs text-[#47545D] mt-0.5">' + esc(ev.dayLabel) + (ev.priceLabel ? ' · ' + esc(ev.priceLabel) : '') + '</p></div>' +
+        '<p class="text-xs text-[#47545D] mt-0.5">' + esc(ev.dayLabel) + (ev.venue ? ' · ' + esc(ev.placeShort) : '') + (ev.priceLabel ? ' · ' + esc(ev.priceLabel) : '') + '</p></div>' +
       '<span class="text-[#0085B7]" aria-hidden="true">&rarr;</span></a>';
   }
 
@@ -134,9 +153,10 @@
     });
 
     // Course meta line: <p data-ttc-meta="CERT7"> -> "2 full days · 9:00am–4:00pm UK · live online"
+    // (or "... · live online or in London" when a course has classroom dates too)
     document.querySelectorAll("[data-ttc-meta]").forEach(function (el) {
       var evs = byCode[el.getAttribute("data-ttc-meta")] || [];
-      if (evs.length) el.textContent = evs[0].lengthLabel + " · " + evs[0].timeLabel + " · live online";
+      if (evs.length) el.textContent = evs[0].lengthLabel + " · " + evs[0].timeLabel + " · " + placeSummary(evs);
     });
 
     // Catch-all: any course template in the feed that has no table on this page
@@ -154,7 +174,7 @@
         return '<article class="bg-white border border-[#323F48]/10 rounded-[8px] mt-6 overflow-hidden">' +
           '<div class="px-6 sm:px-8 pt-5 pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-[#323F48]/10">' +
             '<div><h3 class="font-display font-bold text-lg text-[#1E2B34]">' + esc(evs[0].name) + '</h3>' +
-            '<p class="text-sm text-[#47545D] mt-1">' + esc(evs[0].lengthLabel + " · " + evs[0].timeLabel + " · live online") + '</p></div>' +
+            '<p class="text-sm text-[#47545D] mt-1">' + esc(evs[0].lengthLabel + " · " + evs[0].timeLabel + " · " + placeSummary(evs)) + '</p></div>' +
             (evs[0].priceLabel ? '<p class="tnum font-display font-extrabold text-[#0085B7] text-xl">' + esc(evs[0].priceLabel) + '</p>' : '') +
           '</div>' +
           '<div class="divide-y divide-[#323F48]/10 tnum">' + evs.slice(0, 3).map(function (ev) { return rowHtml(ev, false); }).join("") + '</div>' +
@@ -239,6 +259,17 @@
       // fall back to the per-date event page if a register link is ever missing.
       var register = toBooking((ev.RegistrationInfo || {}).RegisterUri);
       var fallback = toBooking(view.replace("/uk/courses/", "/w/uk/courses/") + "/" + ev.EventID);
+      // In-person venue from Arlo's scheduling data; online events carry none.
+      var loc = ev.Location || {};
+      var venue = null;
+      if (loc && loc.IsOnline !== true && (loc.VenueName || loc.City || (loc.Name && loc.Name !== "Online"))) {
+        venue = {
+          name: loc.VenueName || loc.Name || "",
+          street: loc.StreetLine1 || "",
+          city: loc.City || loc.Name || "",
+          postcode: loc.PostCode || ""
+        };
+      }
       return {
         id: ev.EventID,
         code: ev.TemplateCode || "",
@@ -252,7 +283,8 @@
         // entered inclusive (395) so the old PRICE_HOLD is no longer needed.
         price: offer.AmountTaxInclusive != null ? offer.AmountTaxInclusive : null,
         book: register || fallback,
-        full: !!ev.IsFull
+        full: !!ev.IsFull,
+        venue: venue
       };
     });
   }
