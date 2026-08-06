@@ -26,16 +26,17 @@ for _ in range(10):
     url = nxt if nxt.startswith("http") else ARLO_HOST + nxt
     time.sleep(0.5)
 
-ALIASES = ("https://www.the-training-centre.com", "https://the-training-centre.com", ARLO_HOST)
+ALIASES = ("https://book.the-training-centre.com", "https://www.the-training-centre.com",
+           "https://the-training-centre.com", ARLO_HOST)
 
 # The host booking links must use = wherever Arlo's checkout actually answers.
-# NOT ARLO_HOST: while the custom domain is active, Arlo 302s /uk/register hits on
-# its own arlo.co host across to www.../uk/checkout and the booking session does not
-# survive the cross-domain hop - the delegate lands on an EMPTY cart (verified
-# 31 Jul 2026; John hit exactly this reviewing the dev site). Keep in sync with
-# BOOK_HOST in assets/schedule.js. At domain cutover this changes with the DNS
-# decision (Arlo's branded checkout subdomain, or Cloudflare proxying /uk/* to Arlo).
-BOOK_HOST = "https://www.the-training-centre.com"
+# Since 6 Aug 2026 that is book.the-training-centre.com (Arlo completed the paid
+# custom-domain move: all hosted pages + checkout, SSL issued; www now serves the
+# new site). NOT ARLO_HOST: Arlo 302s /uk/register hits on its own arlo.co host
+# across to the custom domain and the booking session does not survive the
+# cross-domain hop - the delegate lands on an EMPTY cart (verified 31 Jul 2026).
+# Keep in sync with BOOK_HOST in assets/schedule.js.
+BOOK_HOST = "https://book.the-training-centre.com"
 
 
 def to_booking(u):

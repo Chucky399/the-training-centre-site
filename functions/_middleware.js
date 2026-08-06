@@ -14,10 +14,15 @@
  * static asset.
  */
 
-/* Paths Arlo still owns after the domain moves: booking, checkout, the customer
+/* Paths Arlo still owns after the domain move: booking, checkout, the customer
    portal and the public API. Old booking links, bookmarked checkouts and the
-   links inside Arlo's own confirmation emails keep working because of these. */
-const ARLO = "https://marketstreetconsultantsltdevents.arlo.co";
+   links inside Arlo's own confirmation emails keep working because of these.
+   Arlo completed the custom-domain move on 6 Aug 2026 — its checkout and hosted
+   pages now answer on book.the-training-centre.com (SSL issued), so that is the
+   redirect target. Do not point these at the raw arlo.co host: Arlo bounces its
+   own host across domains and the booking session loses the cart on the hop
+   (empty-cart bug, verified 31 Jul 2026). */
+const ARLO = "https://book.the-training-centre.com";
 const ARLO_PREFIXES = [
   "/uk/register", "/uk/checkout", "/uk/account", "/uk/orders",
   "/eu/register", "/eu/checkout", "/api",

@@ -17,18 +17,18 @@
   var ARLO_HOST = "https://marketstreetconsultantsltdevents.arlo.co";
 
   /* The host booking links must use = wherever Arlo's checkout actually answers.
-     Today that is www (www still CNAMEs to Arlo). AT DOMAIN CUTOVER THIS MUST CHANGE
-     with the DNS decision: either Arlo moves its custom domain to e.g.
-     book.the-training-centre.com (set that here), or Cloudflare proxies /uk/register,
-     /uk/checkout + /api through to Arlo on www (leave as-is). Pointing this at
-     ARLO_HOST does NOT work - see the empty-cart note above. */
-  var BOOK_HOST = "https://www.the-training-centre.com";
-  var ARLO_ALIASES = ["https://www.the-training-centre.com", "https://the-training-centre.com", ARLO_HOST];
+     Since 6 Aug 2026 that is book.the-training-centre.com: Arlo completed the paid
+     custom-domain move (all hosted pages + checkout, SSL issued) and www now serves
+     THIS site. Pointing this at ARLO_HOST does NOT work - see the empty-cart note
+     above. www stays in the alias list so any cached/baked URL from before the move
+     still normalises here. */
+  var BOOK_HOST = "https://book.the-training-centre.com";
+  var ARLO_ALIASES = ["https://book.the-training-centre.com", "https://www.the-training-centre.com", "https://the-training-centre.com", ARLO_HOST];
 
   var API_BASE = ARLO_HOST + "/api/2012-02-01/pub/resources/eventsearch/";
   var API_FIELDS = "EventID,Name,StartDateTime,EndDateTime,ViewUri,TemplateCode,AdvertisedOffers,IsFull,RegistrationInfo,Location";
 
-  var CACHE_KEY = "ttc-schedule-v5"; // v5: venue added per event (John, 4 Aug: London classroom dates must not present as live online) - new key so no browser serves cached venue-less events
+  var CACHE_KEY = "ttc-schedule-v6"; // v6: booking host moved to book.the-training-centre.com (Arlo custom-domain cutover, 6 Aug) - new key so no browser renders from a pre-cutover cache. v5: venue added per event (John, 4 Aug)
   var CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes (was 1 hour; shortened 5 Aug 2026 so
   // John's Arlo edits appear quickly - he adds dates then checks the site. Still enough
   // of a guard that a browsing session never hammers the API.
