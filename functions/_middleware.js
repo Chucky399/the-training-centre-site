@@ -26,6 +26,10 @@ const ARLO = "https://book.the-training-centre.com";
 const ARLO_PREFIXES = [
   "/uk/register", "/uk/checkout", "/uk/account", "/uk/orders",
   "/eu/register", "/eu/checkout", "/api",
+  /* Registrant self-service transfer pages (/{region}/transfer/{guid}) — linked
+     from Arlo confirmation emails sent before the 6 Aug cutover, so the www
+     variants must keep working. Path confirmed from GA4 history (7 Aug 2026). */
+  "/uk/transfer", "/eu/transfer", "/af/transfer", "/na/transfer",
 ];
 
 /* Old URL -> page on the new site. 112 entries + the two bare listing URLs below. */
