@@ -30,6 +30,11 @@ const ARLO_PREFIXES = [
      from Arlo confirmation emails sent before the 6 Aug cutover, so the www
      variants must keep working. Path confirmed from GA4 history (7 Aug 2026). */
   "/uk/transfer", "/eu/transfer", "/af/transfer", "/na/transfer",
+  /* Arlo short links (/s/{token}) — course-instruction emails carry the Zoom
+     joining URL in this form, so every joining email sent before the 6 Aug
+     cutover points at www/s/... (evidence: delegate 404 screenshot, 7 Aug).
+     Must stay "/s/" with the trailing slash. */
+  "/s/",
 ];
 
 /* Old URL -> page on the new site. 112 entries + the two bare listing URLs below. */
