@@ -99,6 +99,15 @@ const EXACT = {
   "/uk/venues/4-prospero-house": "/schedule/",
   "/uk/venues/5-edinburgh": "/schedule/",
   "/w/uk": "/",
+  // Bare region roots: trailing slashes are stripped before lookup, so "/w/af/"
+  // arrives here as "/w/af" and misses the "/w/af/" prefix rule below. The 404
+  // audit of 1,784 archived URLs (10 Aug 2026) found these three the only gaps.
+  "/w/af": "/",
+  "/w/eu": "/",
+  "/w/na": "/",
+  "/af": "/",
+  "/eu": "/",
+  "/na": "/",
   // Bare /w/aboutus (no region segment) is a real old-site URL — it was carried
   // on a live account-level sitelink and 404'd until 10 Aug 2026.
   "/w/aboutus": "/about/",
