@@ -99,6 +99,9 @@ const EXACT = {
   "/uk/venues/4-prospero-house": "/schedule/",
   "/uk/venues/5-edinburgh": "/schedule/",
   "/w/uk": "/",
+  // Bare /w/aboutus (no region segment) is a real old-site URL — it was carried
+  // on a live account-level sitelink and 404'd until 10 Aug 2026.
+  "/w/aboutus": "/about/",
   "/w/uk/aboutus": "/about/",
   "/w/uk/courses": "/courses/",
   "/w/uk/courses/108-lead-disaster-recovery-manager": "/courses/lead-disaster-recovery-manager/",
@@ -182,18 +185,23 @@ export async function onRequest(context) {
   const path = url.pathname.length > 1
     ? url.pathname.replace(/\/+$/, "")
     : url.pathname;
+  // The old Arlo site answered its paths in any casing (/w/UK/aboutus worked),
+  // and live ad sitelinks carry uppercase variants — so all lookups match on a
+  // lowercased copy. Redirects still forward the ORIGINAL pathname/query, and
+  // unmatched paths fall through to the static asset untouched.
+  const lpath = path.toLowerCase();
 
   for (const p of ARLO_PREFIXES) {
-    if (path === p || path.startsWith(p + "/")) {
+    if (lpath === p || lpath.startsWith(p + "/")) {
       return Response.redirect(ARLO + url.pathname + url.search, 301);
     }
   }
 
-  const hit = EXACT[path];
+  const hit = EXACT[lpath];
   if (hit) return Response.redirect(url.origin + hit + url.search, 301);
 
   for (const [prefix, target] of PREFIXES) {
-    if (path.startsWith(prefix)) {
+    if (lpath.startsWith(prefix)) {
       // Keep the query string, exactly as the EXACT and ARLO_PREFIXES branches do -
       // dropping it here was silently stripping gclid/UTM params off legacy paid links.
       return Response.redirect(url.origin + target + url.search, 301);
