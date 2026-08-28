@@ -189,8 +189,26 @@ const PREFIXES = [
   ["/eu/", "/"], ["/na/", "/"], ["/af/", "/"],
 ];
 
+/* Country gate. John McGlone's instruction by email, 28 Aug 2026 13:09 UK: "Can you
+   make the change in Cloudflare to prevent connections from Malaysia as a whole?
+   Singapore in particular", after a DDoS-style burst that morning (109 concurrent
+   connections from Singapore, 154 visitors across 60 pages). The domain's DNS is at
+   GoDaddy, not Cloudflare, so there is no Cloudflare zone to hang a WAF rule on. This
+   Function runs on Cloudflare's edge for every request to www regardless, and
+   request.cf.country is the same geo signal a WAF rule would use. ISO 3166-1 alpha-2.
+   Blocked visitors get a plain 403 and no page. The x-ttc-geo response header on
+   allowed traffic exists so a deploy can be verified from the UK without a Malaysian IP. */
+const BLOCKED_COUNTRIES = new Set(["MY", "SG"]);
+
 export async function onRequest(context) {
   const url = new URL(context.request.url);
+  const country = (context.request.cf && context.request.cf.country) || "";
+  if (BLOCKED_COUNTRIES.has(country)) {
+    return new Response("Not available in your region.", {
+      status: 403,
+      headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store", "x-ttc-geo": "blocked" },
+    });
+  }
   const path = url.pathname.length > 1
     ? url.pathname.replace(/\/+$/, "")
     : url.pathname;
@@ -217,5 +235,9 @@ export async function onRequest(context) {
     }
   }
 
-  return context.next();
+  const response = await context.next();
+  // Mark allowed passthrough responses so the geo gate's presence is verifiable.
+  const marked = new Response(response.body, response);
+  marked.headers.set("x-ttc-geo", "allowed");
+  return marked;
 }

@@ -26,9 +26,14 @@
   var ARLO_ALIASES = ["https://book.the-training-centre.com", "https://www.the-training-centre.com", "https://the-training-centre.com", ARLO_HOST];
 
   var API_BASE = ARLO_HOST + "/api/2012-02-01/pub/resources/eventsearch/";
-  var API_FIELDS = "EventID,Name,StartDateTime,EndDateTime,ViewUri,TemplateCode,AdvertisedOffers,IsFull,RegistrationInfo,Location";
+  // PlacesRemaining added 28 Aug 2026 at John's request on the September-planning call
+  // ("as we got towards that cap of 15 ... a flag would pop up and it would say Nearly
+  // full, or Two places left"). Arlo returns it as null unless "show places remaining" is
+  // switched on in the Arlo admin for the event/template, and even then only once the
+  // count drops below Arlo's threshold - so nothing renders until John enables it.
+  var API_FIELDS = "EventID,Name,StartDateTime,EndDateTime,ViewUri,TemplateCode,AdvertisedOffers,IsFull,PlacesRemaining,RegistrationInfo,Location";
 
-  var CACHE_KEY = "ttc-schedule-v6"; // v6: booking host moved to book.the-training-centre.com (Arlo custom-domain cutover, 6 Aug) - new key so no browser renders from a pre-cutover cache. v5: venue added per event (John, 4 Aug)
+  var CACHE_KEY = "ttc-schedule-v7"; // v7: PlacesRemaining carried per event (28 Aug 2026). v6: booking host moved to book.the-training-centre.com (Arlo custom-domain cutover, 6 Aug) - new key so no browser renders from a pre-cutover cache. v5: venue added per event (John, 4 Aug)
   var CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes (was 1 hour; shortened 5 Aug 2026 so
   // John's Arlo edits appear quickly - he adds dates then checks the site. Still enough
   // of a guard that a browsing session never hammers the API.
@@ -78,6 +83,11 @@
       ? [v.name, v.street, ((v.city || "") + (v.postcode ? " " + v.postcode : "")).trim()].filter(Boolean).join(", ")
       : "live online";
     ev.placeShort = v ? (v.city || v.name) : "live online";
+    // Scarcity label, only when Arlo actually reports a low remaining count.
+    var left = typeof ev.places === "number" ? ev.places : null;
+    ev.placesLabel = (!ev.full && left !== null && left > 0)
+      ? (left === 1 ? "Only 1 place left" : "Only " + left + " places left")
+      : "";
     return ev;
   }
 
@@ -118,6 +128,7 @@
                     : '<p class="font-semibold text-[#1E2B34]">' + esc(ev.dayLabel) + '</p><p class="text-sm text-[#47545D]">' + esc(ev.timeLabel) + ' · ' + esc(ev.placeRow) + '</p>') +
         '</div></div>' +
       (ev.priceLabel ? '<p class="font-display font-bold text-[#1E2B34]">' + esc(ev.priceLabel) + '</p>' : '') +
+      (ev.placesLabel ? '<span class="text-xs font-semibold uppercase tracking-wide text-[#B42318] border border-[#B42318]/30 rounded-[4px] px-2.5 py-1 whitespace-nowrap">' + esc(ev.placesLabel) + '</span>' : '') +
       (ev.full
         ? '<span class="ml-auto text-sm font-semibold text-[#47545D] border border-[#323F48]/20 rounded-[4px] px-5 py-2.5 whitespace-nowrap">Fully booked</span>'
         : '<a href="' + esc(ev.book) + '" target="_blank" rel="noopener" class="btn-solid ml-auto text-sm px-5 py-2.5 whitespace-nowrap">Book this date</a>') +
@@ -132,7 +143,7 @@
         '<p class="text-[10px] font-semibold uppercase tracking-wide text-[#47545D] mt-1">' + esc(ev.tileMonth) + '</p></div>' +
       '<div class="min-w-0 flex-1">' +
         '<p class="font-semibold text-[#1E2B34] text-sm leading-snug group-hover:text-[#0085B7]">' + esc(ev.name) + '</p>' +
-        '<p class="text-xs text-[#47545D] mt-0.5">' + esc(ev.dayLabel) + (ev.venue ? ' · ' + esc(ev.placeShort) : '') + (ev.priceLabel ? ' · ' + esc(ev.priceLabel) : '') + '</p></div>' +
+        '<p class="text-xs text-[#47545D] mt-0.5">' + esc(ev.dayLabel) + (ev.venue ? ' · ' + esc(ev.placeShort) : '') + (ev.priceLabel ? ' · ' + esc(ev.priceLabel) : '') + (ev.placesLabel ? ' · <span class="font-semibold text-[#B42318]">' + esc(ev.placesLabel) + '</span>' : '') + '</p></div>' +
       '<span class="text-[#0085B7]" aria-hidden="true">&rarr;</span></a>';
   }
 
@@ -294,6 +305,8 @@
         price: offer.AmountTaxInclusive != null ? offer.AmountTaxInclusive : null,
         book: register || fallback,
         full: !!ev.IsFull,
+        // null until John enables "places remaining" in Arlo; a number once it is on and low.
+        places: typeof ev.PlacesRemaining === "number" ? ev.PlacesRemaining : null,
         venue: venue
       };
     });
