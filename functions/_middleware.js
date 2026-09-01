@@ -243,5 +243,8 @@ export async function onRequest(context) {
   // Mark allowed passthrough responses so the geo gate's presence is verifiable.
   const marked = new Response(response.body, response);
   marked.headers.set("x-ttc-geo", "allowed");
+  // Which countries the gate is actually enforcing, readable from anywhere.
+  // Lets a deploy be verified without an IP in a blocked country.
+  marked.headers.set("x-ttc-gate", [...BLOCKED_COUNTRIES].join(","));
   return marked;
 }
