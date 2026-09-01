@@ -197,8 +197,12 @@ const PREFIXES = [
    Function runs on Cloudflare's edge for every request to www regardless, and
    request.cf.country is the same geo signal a WAF rule would use. ISO 3166-1 alpha-2.
    Blocked visitors get a plain 403 and no page. The x-ttc-geo response header on
-   allowed traffic exists so a deploy can be verified from the UK without a Malaysian IP. */
-const BLOCKED_COUNTRIES = new Set(["MY", "SG"]);
+   allowed traffic exists so a deploy can be verified from the UK without a Malaysian IP.
+
+   Nigeria (NG) added 1 Sep 2026 on John's instruction by email 08:38 UK ("Lagos
+   and Singapore showing the exact same connection this morning - can we also block
+   Nigeria as a whole?"), Claire approved same morning. */
+const BLOCKED_COUNTRIES = new Set(["MY", "SG", "NG"]);
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
