@@ -109,8 +109,8 @@ META = {
               "The recognised benchmark for European data protection law. IAPP CIPP/E, 2 days live online, \u00a31,395, exam and IAPP membership included."),
     "CERT8": ("CIPM Certification Course",
               "The privacy programme management credential that pairs with CIPP/E. IAPP CIPM, 2 days live online, \u00a31,395, exam and IAPP membership included."),
-    "CYBE4": ("Cyber Assurance Practitioner",
-              "Build and evidence cyber assurance that stands up to scrutiny. Certified Cyber Assurance Practitioner, 3 days live online, \u00a31,450, exam included."),
+    "CYBE4": ("Cyber Assurance Framework Practitioner",
+              "Build and evidence cyber assurance that stands up to scrutiny. Cyber Assurance Framework Practitioner, 3 days live online, \u00a31,450, exam included."),
     "CYBE5": ("Cyber Security Foundation",
               "A single day to get grounded in cyber security fundamentals, for teams who need the basics right. Live online, \u00a3395, capped at 15 delegates."),
     "EURO": ("DPO Ready | CIPP/E and CIPM in a Week",
@@ -637,13 +637,13 @@ def build_course_page(t, notes):
                           cta_href="#dates", cta_label="See dates &amp; book", jumpnav=jumpnav_course())
     page += f"""
 <nav class="max-w-6xl mx-auto px-5 pt-5 text-sm text-[#47545D]" aria-label="Breadcrumb">
-  <a href="/courses/" class="hover:text-[#0085B7]">Courses</a> <span class="mx-1">/</span> <a href="{CATEGORIES.get(primary_cat, ('', '/courses/'))[1]}" class="hover:text-[#0085B7]">{esc(primary_cat)}</a> <span class="mx-1">/</span> <span class="text-[#1E2B34] font-semibold">{esc(name)}</span>
+  <a href="/courses/" class="hover:text-[#0085B7]">Courses</a> <span class="mx-1">/</span> <a href="{CATEGORIES.get(primary_cat, ('', '/courses/'))[1]}" class="hover:text-[#0085B7]">{esc(primary_cat)}</a> <span class="mx-1">/</span> <span class="text-[#1E2B34] font-semibold" data-ttc-name="{esc(code)}">{esc(name)}</span>
 </nav>
 
 <section class="max-w-6xl mx-auto px-5 pt-6 pb-10 md:pb-14 grid md:grid-cols-[1.15fr_0.85fr] gap-10 items-start">
   <div>
     <p class="text-[#0085B7] font-display font-bold uppercase tracking-[0.14em] text-xs">{esc(primary_cat)} &middot; <span data-ttc-place="{esc(code)}">Live online</span></p>
-    <h1 class="font-display font-extrabold text-[#1E2B34] text-3xl sm:text-4xl md:text-[2.7rem] leading-tight mt-4" style="text-wrap:balance">{esc(name)}</h1>
+    <h1 class="font-display font-extrabold text-[#1E2B34] text-3xl sm:text-4xl md:text-[2.7rem] leading-tight mt-4" style="text-wrap:balance" data-ttc-name="{esc(code)}">{esc(name)}</h1>
     <p class="text-[#47545D] text-lg leading-relaxed mt-5 max-w-[54ch]">{esc(summary)}</p>
     <dl class="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-4 mt-8 tnum">
       <div><dt class="text-xs font-semibold uppercase tracking-wide text-[#47545D]">Length</dt><dd class="font-display font-bold text-[#1E2B34] mt-1">{esc(dur)}</dd></div>
@@ -729,7 +729,7 @@ def build_category_page(cat_name, slug, templates, notes):
       <article class="bg-white border border-[#323F48]/10 rounded-[8px] overflow-hidden">
         <div class="px-6 sm:px-8 py-6 flex flex-wrap items-start gap-x-8 gap-y-4">
           <div class="flex-1 min-w-[16rem]">
-            <h2 class="font-display font-bold text-xl text-[#1E2B34]"><a href="{url}" class="hover:text-[#0085B7]">{esc(name)}</a></h2>
+            <h2 class="font-display font-bold text-xl text-[#1E2B34]"><a href="{url}" class="hover:text-[#0085B7]" data-ttc-name="{esc(code)}">{esc(name)}</a></h2>
             <p class="text-[#47545D] leading-relaxed mt-2">{esc(summary)}</p>
             <p class="text-sm text-[#47545D] mt-3 tnum">{esc(dur)} &middot; live online &middot; <span data-ttc-nextdate="{esc(code)}">dates being scheduled</span></p>
           </div>

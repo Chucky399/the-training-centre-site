@@ -33,7 +33,7 @@
   // count drops below Arlo's threshold - so nothing renders until John enables it.
   var API_FIELDS = "EventID,Name,StartDateTime,EndDateTime,ViewUri,TemplateCode,AdvertisedOffers,IsFull,PlacesRemaining,RegistrationInfo,Location";
 
-  var CACHE_KEY = "ttc-schedule-v7"; // v7: PlacesRemaining carried per event (28 Aug 2026). v6: booking host moved to book.the-training-centre.com (Arlo custom-domain cutover, 6 Aug) - new key so no browser renders from a pre-cutover cache. v5: venue added per event (John, 4 Aug)
+  var CACHE_KEY = "ttc-schedule-v8"; // v8: course-name hook data-ttc-name (2 Sep 2026). v7: PlacesRemaining carried per event (28 Aug 2026). v6: booking host moved to book.the-training-centre.com (Arlo custom-domain cutover, 6 Aug) - new key so no browser renders from a pre-cutover cache. v5: venue added per event (John, 4 Aug)
   var CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes (was 1 hour; shortened 5 Aug 2026 so
   // John's Arlo edits appear quickly - he adds dates then checks the site. Still enough
   // of a guard that a browsing session never hammers the API.
@@ -178,6 +178,14 @@
       if (!evs.length) return;
       var p = placeSummary(evs);
       el.textContent = p.charAt(0).toUpperCase() + p.slice(1);
+    });
+
+    // Course name: <element data-ttc-name="CERT7"> -> live template name, so a rename
+    // in Arlo reaches headings/cards without a rebuild. No feed events for the code
+    // (no upcoming dates) = baked name stands, the correct fallback.
+    document.querySelectorAll("[data-ttc-name]").forEach(function (el) {
+      var evs = byCode[el.getAttribute("data-ttc-name")] || [];
+      if (evs.length && evs[0].name) el.textContent = evs[0].name;
     });
 
     // Catch-all: any course template in the feed that has no table on this page
