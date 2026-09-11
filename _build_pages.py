@@ -40,6 +40,7 @@ SLUGS = {
     "BCSF": "bcs-foundation-ai", "CYBE4": "cyber-assurance-practitioner",
     "CYBE5": "cyber-security-foundation", "ARTI1": "ai-for-project-managers",
     "AIPR": "ai-productivity", "AIAG": "ai-agents", "AIST": "ai-strategy-governance",
+    "CERT35": "data-protection-practitioner",
 }
 
 CATEGORIES = {  # feed category name -> (slug, page path). ISO maps to the existing overview page.
