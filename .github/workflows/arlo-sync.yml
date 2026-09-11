@@ -45,6 +45,12 @@ jobs:
       - name: Rebuild the course and category pages from Arlo
         run: python _build_pages.py
 
+      # The homepage lists course rows in five marked blocks; this regenerates
+      # only the rows so a new course reaches the homepage too, not just its
+      # own page. Runs after the page build because it links to those pages.
+      - name: Rebuild the homepage course rows
+        run: python _build_home.py
+
       - name: Rebuild the sitemap
         run: python _build_sitemap.py
 
@@ -76,7 +82,11 @@ jobs:
       # GitHub switches off a scheduled workflow after 60 days with no push to the
       # repository. Workflow runs do not count, only commits. If Arlo content sat
       # unchanged for two months this job would quietly stop and nobody would know.
+      # if: always() so a run where Arlo is down (a build step aborts) still
+      # counts a heartbeat when one is due - otherwise a long Arlo outage would
+      # also stop the commits that keep GitHub from disabling this schedule.
       - name: Keep the schedule alive
+        if: always()
         run: |
           last=$(git log -1 --format=%ct)
           age_days=$(( ( $(date +%s) - last ) / 86400 ))
