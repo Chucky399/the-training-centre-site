@@ -605,7 +605,7 @@ def build_course_page(t, notes):
     summary = plain_text((t.get("Description") or {}).get("Summary", "")) or plain_text(fm.get("Description", ""))[:180]
     summary = strip_vat_sentences(summary, notes)
     dur = duration_label(t)
-    slug = SLUGS[code]
+    slug = RESOLVED[code]
 
     about_html = ""
     for fname in ("About This Course", "Description"):
@@ -723,9 +723,37 @@ def build_course_page(t, notes):
         f.write(page)
     return f"/courses/{slug}/"
 
+# Slug actually used for each course code this run. SLUGS above is the curated
+# override list; anything not in it gets a slug worked out from its name, so a
+# course added in Arlo builds a page on its own instead of being skipped.
+RESOLVED = {}
+
+def derive_slug(name):
+    s = re.sub(r"[^a-z0-9]+", "-", clean_name(name).lower()).strip("-")
+    return re.sub(r"-{2,}", "-", s)[:70] or "course"
+
+def resolve_slugs(templates, previous):
+    """code -> slug. Curated override first, then the slug this code already had
+    (so a rename in Arlo never moves a live URL or orphans an indexed page),
+    then one derived from the course name."""
+    was = {v.get("code"): k for k, v in previous.items() if v.get("code")}
+    taken = set()
+    RESOLVED.clear()
+    for t in templates:
+        code = t.get("Code")
+        if not code or code in SKIP or code in HANDBUILT:
+            continue
+        slug = SLUGS.get(code) or was.get(code) or derive_slug(t.get("Name") or code)
+        base, n = slug, 2
+        while slug in taken:           # two courses that reduce to the same slug
+            slug = f"{base}-{n}"; n += 1
+        taken.add(slug)
+        RESOLVED[code] = slug
+    return RESOLVED
+
 def course_url(code):
     if code in HANDBUILT: return HANDBUILT[code]
-    if code in SLUGS: return f"/courses/{SLUGS[code]}/"
+    if code in RESOLVED: return f"/courses/{RESOLVED[code]}/"
     return None
 
 def build_category_page(cat_name, slug, templates, notes):
@@ -843,6 +871,34 @@ def build_courses_index(templates, cat_counts):
     with open(os.path.join(BASE, "courses", "index.html"), "w", encoding="utf-8", newline="\n") as f:
         f.write(page)
 
+def merge_categories(templates):
+    """Add any category Arlo carries that CATEGORIES does not already name, so a
+    new category gets its own page and a slot on /courses/ without a code change.
+    Curated entries always win: they hold the agreed slug and page path."""
+    for t in templates:
+        if t.get("Code") in SKIP:
+            continue
+        for c in (t.get("Categories") or []):
+            name = c.get("Name")
+            if not name or name in CATEGORIES:
+                continue
+            slug = derive_slug(name)
+            CATEGORIES[name] = (slug, f"/courses/{slug}/")
+            print(f"  + new category {name!r} -> /courses/{slug}/")
+    return CATEGORIES
+
+
+def read_manifest():
+    """The pages this generator owned last run: slug -> {code, category}."""
+    path = os.path.join(BASE, MANIFEST)
+    if not os.path.exists(path):
+        return {}
+    try:
+        return json.load(open(path, encoding="utf-8"))
+    except (ValueError, OSError):
+        return {}   # unreadable: treat as a first run
+
+
 def reconcile_withdrawals(templates):
     """Retire pages for courses that have been taken out of Arlo.
 
@@ -853,19 +909,14 @@ def reconcile_withdrawals(templates):
     live = {}
     for t in templates:
         code = t.get("Code")
-        if code in SKIP or code in HANDBUILT or code not in SLUGS:
+        if code in SKIP or code in HANDBUILT or code not in RESOLVED:
             continue
         cats = [c["Name"] for c in (t.get("Categories") or [])]
         cat_path = CATEGORIES.get(cats[0], ("", "/courses/"))[1] if cats else "/courses/"
-        live[SLUGS[code]] = {"code": code, "category": cat_path}
+        live[RESOLVED[code]] = {"code": code, "category": cat_path}
 
     man_path = os.path.join(BASE, MANIFEST)
-    previous = {}
-    if os.path.exists(man_path):
-        try:
-            previous = json.load(open(man_path, encoding="utf-8"))
-        except (ValueError, OSError):
-            previous = {}  # unreadable manifest: treat as a first run and retire nothing
+    previous = read_manifest()
 
     gone = [slug for slug in previous if slug not in live]
     if len(gone) > MAX_WITHDRAWALS_PER_RUN:
@@ -918,11 +969,13 @@ def main():
                  f"{MIN_TEMPLATES}. Nothing written - check the feed before rerunning.")
     notes = []
     built = []
+    merge_categories(templates)
+    resolve_slugs(templates, read_manifest())
     for t in templates:
         code = t.get("Code")
         if code in SKIP or code in HANDBUILT: continue
         if code not in SLUGS:
-            print(f"  !! no slug for {code} ({t.get('Name')}) - add to SLUGS"); continue
+            print(f"  + new course {code} ({clean_name(t.get('Name') or '')}) -> /courses/{RESOLVED[code]}/")
         built.append(build_course_page(t, notes))
     print(f"course pages written: {len(built)}")
     cat_counts = {}
