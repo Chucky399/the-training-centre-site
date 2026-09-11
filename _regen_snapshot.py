@@ -3,7 +3,7 @@
 #   python _regen_snapshot.py
 # The site also refreshes itself client-side (1 hour localStorage cache), so the
 # snapshot only needs to be fresh enough to cover visitors with JS fetch failures.
-import json, time, datetime, urllib.request
+import json, re, sys, time, datetime, urllib.request
 
 # Arlo's OWN hostname - deliberately NOT www.the-training-centre.com.
 # www is a CNAME to this host today, which is why the old site, the checkout and this
@@ -92,8 +92,41 @@ for ev in items:
     })
 slim.sort(key=lambda e: e["start"])
 
-out = "// Baked snapshot of the Arlo Pub API event feed. Regenerated at deploy time.\n"
-out += "// Snapshot taken: " + datetime.date.today().isoformat() + "\n"
-out += "window.TTC_SNAPSHOT = " + json.dumps(slim, separators=(",", ":")) + ";\n"
-open("assets/schedule-data.js", "w", encoding="utf-8").write(out)
-print("written assets/schedule-data.js,", len(slim), "events")
+PATH = "assets/schedule-data.js"
+
+# Safety floor for the unattended hourly sync. Arlo can answer HTTP 200 with a
+# short or empty event list (hiccup, throttling, a half-written response). Writing
+# that would strip every course page of its dates, prices and structured data, and
+# the sync would push it live. Refuse: an absolute floor, and never accept a set
+# less than half the size of the one already published.
+MIN_EVENTS = 20
+existing = ""
+try:
+    with open(PATH, encoding="utf-8") as f:
+        existing = f.read()
+except OSError:
+    pass
+m = re.search(r"window\.TTC_SNAPSHOT\s*=\s*(\[.*?\]);", existing, re.S)
+prev_count = len(json.loads(m.group(1))) if m else 0
+
+if len(slim) < MIN_EVENTS or (prev_count and len(slim) < prev_count / 2):
+    sys.exit(f"ABORT: Arlo returned {len(slim)} events (floor {MIN_EVENTS}, "
+             f"currently published {prev_count}). {PATH} left untouched - "
+             "check the feed before rerunning.")
+
+payload = "window.TTC_SNAPSHOT = " + json.dumps(slim, separators=(",", ":")) + ";\n"
+
+# Only rewrite when the events themselves changed. The date stamp below would
+# otherwise differ every day and commit a diff that carries no new information.
+prev_payload = ("window.TTC_SNAPSHOT = " + json.dumps(json.loads(m.group(1)), separators=(",", ":")) + ";\n") if m else ""
+if payload == prev_payload:
+    print(f"{PATH} already matches Arlo, {len(slim)} events - not rewritten")
+else:
+    out = "// Baked snapshot of the Arlo Pub API event feed. Regenerated at deploy time.\n"
+    out += "// Snapshot taken: " + datetime.date.today().isoformat() + "\n"
+    out += payload
+    # newline="\n" so a run on Windows cannot flip the file to CRLF and make every
+    # hourly run see a whole-file diff.
+    with open(PATH, "w", encoding="utf-8", newline="\n") as f:
+        f.write(out)
+    print("written " + PATH + ",", len(slim), "events")

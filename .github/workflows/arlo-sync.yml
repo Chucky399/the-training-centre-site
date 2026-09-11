@@ -58,11 +58,36 @@ jobs:
           git status --porcelain
           git config user.name "Arlo sync"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add courses assets/schedule-data.js sitemap.xml
+          # Every page the three scripts can write. The SEO pass rewrites the meta
+          # block in EVERY html file in the repo, not just the course pages, so the
+          # static pages are listed too - leaving them out meant their meta fixes
+          # were recalculated every hour and thrown away.
+          git add index.html 404.html about contact courses in-house-training \
+                  insights privacy schedule terms thank-you trainers \
+                  assets/schedule-data.js sitemap.xml functions/_withdrawn.js
           if git diff --cached --quiet; then
             echo "Changes were outside the pages this job owns. Not committing."
             git checkout -- .
             exit 0
           fi
           git commit -m "Arlo sync: course content updated $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
+
+      # GitHub switches off a scheduled workflow after 60 days with no push to the
+      # repository. Workflow runs do not count, only commits. If Arlo content sat
+      # unchanged for two months this job would quietly stop and nobody would know.
+      - name: Keep the schedule alive
+        run: |
+          last=$(git log -1 --format=%ct)
+          age_days=$(( ( $(date +%s) - last ) / 86400 ))
+          echo "Newest commit is ${age_days} day(s) old."
+          if [ "$age_days" -lt 25 ]; then
+            echo "Recent enough. GitHub will not disable the schedule."
+            exit 0
+          fi
+          git config user.name "Arlo sync"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          date -u +'%Y-%m-%dT%H:%M:%SZ' > .github/last-arlo-sync.txt
+          git add .github/last-arlo-sync.txt
+          git commit -m "Arlo sync: heartbeat, keeping the hourly schedule enabled"
           git push

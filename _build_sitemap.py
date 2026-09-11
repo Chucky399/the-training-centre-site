@@ -4,7 +4,7 @@
 # a page that has just appeared (a new Arlo course) gets today's date.
 # Run after _build_pages.py:
 #   python _build_sitemap.py
-import os, re, datetime
+import os, re, sys, datetime
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 SITE = "https://www.the-training-centre.com"
@@ -12,7 +12,6 @@ OUT = os.path.join(BASE, "sitemap.xml")
 
 # Directories that hold pages people should never reach from search.
 EXCLUDE_DIRS = {"thank-you", "functions", "assets", "__pycache__", ".git", ".github"}
-EXCLUDE_FILES = {"404.html"}
 
 
 def existing_lastmod():
@@ -20,7 +19,14 @@ def existing_lastmod():
     if not os.path.exists(OUT):
         return {}
     xml = open(OUT, encoding="utf-8").read()
-    return dict(re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", xml))
+    known = dict(re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", xml))
+    if not known and xml.strip():
+        # The file exists and has content, but nothing parsed. Every page would be
+        # stamped with today's date, which is a whole-sitemap diff for no reason.
+        # Say so loudly rather than letting it pass as "no pages known yet".
+        print(f"WARNING: {OUT} exists ({len(xml)} bytes) but no entries parsed. "
+              "Every URL will take today's date. Check the file format.", file=sys.stderr)
+    return known
 
 
 def page_urls():

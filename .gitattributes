@@ -1,0 +1,13 @@
+# The site is generated on Windows by hand and on Linux by the hourly Arlo sync.
+# Without this, Git's autocrlf setting on a Windows machine can flip line endings
+# and make every generated file look changed, which would commit the whole site
+# every hour for no reason.
+* text=auto eol=lf
+*.png binary
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.pdf binary

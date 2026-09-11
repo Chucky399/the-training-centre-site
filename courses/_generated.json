@@ -1,0 +1,126 @@
+{
+  "ai-agents": {
+    "category": "/courses/ai-training/",
+    "code": "AIAG"
+  },
+  "ai-for-project-managers": {
+    "category": "/courses/ai-training/",
+    "code": "ARTI1"
+  },
+  "ai-productivity": {
+    "category": "/courses/ai-training/",
+    "code": "AIPR"
+  },
+  "ai-strategy-governance": {
+    "category": "/courses/ai-training/",
+    "code": "AIST"
+  },
+  "bcs-essentials-ai": {
+    "category": "/courses/bcs-training/",
+    "code": "BCSE"
+  },
+  "bcs-foundation-ai": {
+    "category": "/courses/bcs-training/",
+    "code": "BCSF"
+  },
+  "cipa": {
+    "category": "/courses/gdpr-training/",
+    "code": "CERT27"
+  },
+  "cipm": {
+    "category": "/courses/data-protection/",
+    "code": "CERT8"
+  },
+  "cipt": {
+    "category": "/courses/iapp-training/",
+    "code": "CERT16"
+  },
+  "cyber-assurance-practitioner": {
+    "category": "/courses/business-analysis-design/",
+    "code": "CYBE4"
+  },
+  "cyber-security-analyst": {
+    "category": "/courses/iso-standards/",
+    "code": "ISO214"
+  },
+  "cyber-security-foundation": {
+    "category": "/courses/business-analysis-design/",
+    "code": "CYBE5"
+  },
+  "cybersecurity-manager": {
+    "category": "/courses/cybersecurity/",
+    "code": "ISO25"
+  },
+  "data-protection-practitioner": {
+    "category": "/courses/data-protection/",
+    "code": "CERT35"
+  },
+  "dpo-ready": {
+    "category": "/courses/iapp-training/",
+    "code": "EURO"
+  },
+  "gdpr-awareness": {
+    "category": "/courses/gdpr-training/",
+    "code": "GDPR"
+  },
+  "gdpr-foundation": {
+    "category": "/courses/gdpr-training/",
+    "code": "CERT14"
+  },
+  "iso-22301-lead-auditor": {
+    "category": "/courses/disaster-recovery/",
+    "code": "ISO23"
+  },
+  "iso-22301-lead-implementer": {
+    "category": "/courses/disaster-recovery/",
+    "code": "ISO24"
+  },
+  "iso-22361-lead-crisis-manager": {
+    "category": "/courses/disaster-recovery/",
+    "code": "CERT28"
+  },
+  "iso-27001-lead-auditor": {
+    "category": "/courses/iso-standards/",
+    "code": "ISO21"
+  },
+  "iso-27001-lead-implementer": {
+    "category": "/courses/iso-standards/",
+    "code": "ISO2"
+  },
+  "iso-27005-risk-manager": {
+    "category": "/courses/risk-management/",
+    "code": "ISO212"
+  },
+  "iso-27035-lead-incident-manager": {
+    "category": "/courses/risk-management/",
+    "code": "ISO213"
+  },
+  "iso-27701-lead-implementer": {
+    "category": "/courses/gdpr-training/",
+    "code": "ISO210"
+  },
+  "iso-31000-lead-risk-manager": {
+    "category": "/courses/risk-management/",
+    "code": "ISO3"
+  },
+  "iso-31000-risk-analyst": {
+    "category": "/courses/risk-management/",
+    "code": "ISO35"
+  },
+  "iso-42001-lead-auditor": {
+    "category": "/courses/ai-training/",
+    "code": "ISO44"
+  },
+  "iso-42001-lead-implementer": {
+    "category": "/courses/business-analysis-design/",
+    "code": "ISO43"
+  },
+  "lead-disaster-recovery-manager": {
+    "category": "/courses/disaster-recovery/",
+    "code": "LEAD"
+  },
+  "operational-resilience-manager": {
+    "category": "/courses/business-resilience/",
+    "code": "CERT30"
+  }
+}
