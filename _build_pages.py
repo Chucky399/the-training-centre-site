@@ -25,6 +25,11 @@ HANDBUILT = {"CERT7": "/courses/cipp-e/", "CERT13": "/courses/cdpo/",
              "AIGO": "/courses/aigp/", "TRUS": "/courses/taise/"}
 SKIP = {"CERT34"}  # hard-copy study guide: a product, not a course page
 
+# Safety floor for the unattended hourly sync: if Arlo answers with far fewer
+# templates than the catalogue really holds (outage, throttling, a half-written
+# response), abort rather than regenerate the site down to a stub.
+MIN_TEMPLATES = 25
+
 SLUGS = {
     "EURO": "dpo-ready", "CERT8": "cipm", "ISO2": "iso-27001-lead-implementer",
     "ISO21": "iso-27001-lead-auditor", "CERT14": "gdpr-foundation",
@@ -829,6 +834,9 @@ def build_courses_index(templates, cat_counts):
 def main():
     templates = fetch_templates()
     print(f"templates fetched: {len(templates)}")
+    if len(templates) < MIN_TEMPLATES:
+        sys.exit(f"ABORT: Arlo returned {len(templates)} templates, below the floor of "
+                 f"{MIN_TEMPLATES}. Nothing written - check the feed before rerunning.")
     notes = []
     built = []
     for t in templates:

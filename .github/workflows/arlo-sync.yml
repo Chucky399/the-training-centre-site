@@ -1,0 +1,68 @@
+# Keeps the website in step with Arlo without anyone touching it.
+#
+# Every hour this rebuilds the course pages, the category pages and the sitemap
+# from the course content in Arlo, and commits only if something actually
+# changed. Pushing to this repository deploys the site, so a course added,
+# renamed, repriced or withdrawn in Arlo reaches the live site on its own.
+#
+# To run it immediately instead of waiting: Actions tab, "Arlo course sync",
+# "Run workflow". To stop it: disable the workflow on that same page.
+
+name: Arlo course sync
+
+on:
+  schedule:
+    # Every hour at 17 minutes past, to stay off the top-of-hour rush.
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: arlo-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Order matters: the page build stamps course dates into each page's
+      # structured data from this snapshot, so the snapshot is refreshed first.
+      # Build the pages first and every run bakes the previous run's dates,
+      # which would commit a pointless diff every hour.
+      - name: Refresh the course schedule data
+        run: python _regen_snapshot.py
+
+      - name: Rebuild the course and category pages from Arlo
+        run: python _build_pages.py
+
+      - name: Rebuild the sitemap
+        run: python _build_sitemap.py
+
+      - name: Commit and deploy if the site changed
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Arlo and the site already match. Nothing to deploy."
+            exit 0
+          fi
+          echo "Changed files:"
+          git status --porcelain
+          git config user.name "Arlo sync"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add courses assets/schedule-data.js sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Changes were outside the pages this job owns. Not committing."
+            git checkout -- .
+            exit 0
+          fi
+          git commit -m "Arlo sync: course content updated $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
