@@ -271,6 +271,7 @@
   </div>
   <form id="enquiry-form" action="https://lp-form-handler.claireljarrett.workers.dev/submit" method="POST" class="bg-white border border-[#323F48]/10 rounded-[8px] p-6 sm:p-8 space-y-4">
     <input type="hidden" name="project" value="the-training-centre">
+    <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden"><label for="ttc-hp-url">Leave this field empty</label><input type="text" id="ttc-hp-url" name="url" tabindex="-1" autocomplete="off"></div>
     <input type="hidden" name="Course" value="Cybersecurity Courses">
     <div><label for="name" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Your name</label>
       <input required type="text" id="name" name="name" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="name"></div>
@@ -280,6 +281,7 @@
       <input required type="tel" id="phone" name="phone" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" autocomplete="tel"></div>
     <div><label for="message" class="block text-sm font-semibold text-[#1E2B34] mb-1.5">Your question <span class="font-normal text-[#47545D]">(optional)</span></label>
       <textarea id="message" name="message" rows="3" class="w-full border border-[#323F48]/20 rounded-[4px] px-4 py-3 focus:outline-none focus:border-[#13B4EA]" placeholder="Dates, team bookings, payment plans, whether this is the right course..."></textarea></div>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAEz1sVk1JQjANLXo" data-appearance="interaction-only"></div>
     <button type="submit" class="btn-solid w-full py-3.5">Send my question</button>
     <p id="form-note" class="text-xs text-[#47545D]">We reply the same working day. Your details go to our course advisers and nowhere else.</p>
   </form>
@@ -337,14 +339,22 @@
 <script src="/assets/schedule-data.js"></script>
 <script src="/assets/schedule.js"></script>
 
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
 document.getElementById('enquiry-form').addEventListener('submit', function(e) {
   e.preventDefault();
   var form = this;
-  var btn = form.querySelector('button[type="submit"]');
+  var btn = form.querySelector('button[type="submit"]'); var btnText = btn.textContent;
   btn.disabled = true; btn.textContent = 'Sending...';
   fetch('https://lp-form-handler.claireljarrett.workers.dev/submit', { method: 'POST', body: new FormData(form) })
-    .then(function() { window.location.href = '/thank-you/'; })
+    .then(function(r) {
+      return r.json().catch(function() { return {}; }).then(function(d) {
+        if (r.ok && d.success !== false) { window.location.href = '/thank-you/'; return; }
+        btn.disabled = false; btn.textContent = btnText;
+        if (window.turnstile) { try { window.turnstile.reset(); } catch (x) {} }
+        alert(d.message || 'Something went wrong. Please call us on 020 3858 9207.');
+      });
+    })
     .catch(function() { btn.disabled = false; btn.textContent = 'Send my question'; alert('Something went wrong. Please call us on 020 3858 9207.'); });
 });
 </script>
