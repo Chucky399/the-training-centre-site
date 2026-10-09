@@ -96,7 +96,7 @@
     "code": "ISO213"
   },
   "iso-27701-lead-implementer": {
-    "category": "/courses/gdpr-training/",
+    "category": "/courses/compliance-training/",
     "code": "ISO210"
   },
   "iso-31000-lead-risk-manager": {
@@ -115,8 +115,16 @@
     "category": "/courses/business-analysis-design/",
     "code": "ISO43"
   },
+  "iso-9001-2026-lead-auditor": {
+    "category": "/courses/iso-standards/",
+    "code": "ISO92"
+  },
+  "iso-9001-lead-implementer-2026": {
+    "category": "/courses/iso-standards/",
+    "code": "ISO93"
+  },
   "iso-iec-42005-conducting-an-ai-system-impact-assessment-1-day": {
-    "category": "/courses/business-analysis-design/",
+    "category": "/courses/iso-standards/",
     "code": "ISO/"
   },
   "lead-disaster-recovery-manager": {
