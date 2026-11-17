@@ -59,6 +59,10 @@
     "category": "/courses/gdpr-training/",
     "code": "CERT14"
   },
+  "iapp-foundations-of-privacy-and-data-protection": {
+    "category": "/courses/data-protection/",
+    "code": "IAPP2"
+  },
   "iso-22301-lead-auditor": {
     "category": "/courses/disaster-recovery/",
     "code": "ISO23"
