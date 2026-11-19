@@ -15,6 +15,14 @@
     "category": "/courses/ai-training/",
     "code": "AIST"
   },
+  "bcs-essentials-ai": {
+    "category": "/courses/bcs-training/",
+    "code": "BCSE"
+  },
+  "bcs-foundation-ai": {
+    "category": "/courses/bcs-training/",
+    "code": "BCSF"
+  },
   "cipa": {
     "category": "/courses/gdpr-training/",
     "code": "CERT27"
